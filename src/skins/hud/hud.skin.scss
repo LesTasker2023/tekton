@@ -1,0 +1,336 @@
+/* ============================================================================
+   HUD Skin — Decorative overrides for the sci-fi/tactical aesthetic
+   All rules scoped to [data-skin="hud"] so they load ONLY when active.
+   Selectors use data-component attributes (not CSS module class names).
+   ============================================================================ */
+
+/* ── Decorative tokens ── */
+[data-skin="hud"] {
+  --notch-size: 12px;
+  --notch-clip: polygon(
+    var(--notch-size) 0%,
+    100% 0%,
+    100% calc(100% - var(--notch-size)),
+    calc(100% - var(--notch-size)) 100%,
+    0% 100%,
+    0% var(--notch-size)
+  );
+  --notch-corner-size: 12px;
+  --notch-corner-weight: 1px;
+  --notch-corner-color: rgba(var(--color-primary-rgb), 0.25);
+
+  --glow-sm: 0 0 8px rgba(var(--color-primary-rgb), 0.2);
+  --glow-md: 0 0 16px rgba(var(--color-primary-rgb), 0.25);
+  --glow-lg: 0 0 32px rgba(var(--color-primary-rgb), 0.2);
+  --glow-accent: 0 0 16px rgba(var(--color-accent-rgb), 0.3);
+
+  --rarity-common: #94a3b8;
+  --rarity-common-rgb: 148, 163, 184;
+  --rarity-uncommon: #22c55e;
+  --rarity-uncommon-rgb: 34, 197, 94;
+  --rarity-rare: #3b82f6;
+  --rarity-rare-rgb: 59, 130, 246;
+  --rarity-epic: #a855f7;
+  --rarity-epic-rgb: 168, 85, 247;
+  --rarity-legendary: #f59e0b;
+  --rarity-legendary-rgb: 245, 158, 11;
+}
+
+/* ── Panel: notch clip-path + corner tab ── */
+[data-skin="hud"] [data-component="panel"] [data-part="bg"] {
+  clip-path: var(--notch-clip);
+}
+
+[data-skin="hud"] [data-component="panel"] {
+  margin: 6px; /* breathing room for protruding brackets */
+}
+
+[data-skin="hud"] [data-component="panel"][data-variant="interactive"]:hover {
+  box-shadow: var(--glow-sm);
+}
+
+/* ── Panel SVG decorator (global class names — rendered by HudPanelDecorator) ── */
+.hud-panel-decorator {
+  position: absolute;
+  inset: -8px;
+  width: calc(100% + 16px);
+  height: calc(100% + 16px);
+  pointer-events: none;
+  z-index: 2;
+  overflow: visible;
+}
+
+.hud-corner-line {
+  fill: none;
+  stroke: var(--corner-accent, rgba(var(--color-accent-rgb), 0.55));
+  stroke-width: 2;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  transition: stroke var(--duration-base) var(--ease-out);
+}
+
+.hud-corner-fill {
+  fill: var(--corner-accent, rgba(var(--color-accent-rgb), 0.25));
+  stroke: none;
+  transition: fill var(--duration-base) var(--ease-out);
+}
+
+.hud-accent-bar {
+  fill: var(--corner-accent, rgba(var(--color-accent-rgb), 0.55));
+  transition: fill var(--duration-base) var(--ease-out);
+}
+
+.hud-accent-tab {
+  fill: var(--corner-accent, rgba(var(--color-accent-rgb), 0.45));
+  transition: fill var(--duration-base) var(--ease-out);
+}
+
+.hud-cross-mark {
+  stroke: var(--corner-accent, rgba(var(--color-accent-rgb), 0.25));
+  stroke-width: 1;
+  stroke-linecap: round;
+  transition: stroke var(--duration-base) var(--ease-out);
+}
+
+.hud-hatch-block {
+  fill: var(--corner-accent, rgba(var(--color-accent-rgb), 0.2));
+  stroke: var(--corner-accent, rgba(var(--color-accent-rgb), 0.3));
+  stroke-width: 1;
+  transition: fill var(--duration-base) var(--ease-out);
+}
+
+.hud-indicator-dot {
+  fill: var(--corner-accent, rgba(var(--color-accent-rgb), 0.3));
+  transition: fill var(--duration-base) var(--ease-out);
+}
+
+.hud-indicator-dot-bright {
+  fill: var(--corner-accent, rgba(var(--color-accent-rgb), 0.7));
+  transition: fill var(--duration-base) var(--ease-out);
+}
+
+/* Panel hover — brighten decorators */
+[data-skin="hud"] [data-component="panel"]:hover .hud-corner-line {
+  stroke: rgba(var(--color-accent-rgb), 0.9);
+}
+
+[data-skin="hud"] [data-component="panel"]:hover .hud-corner-fill {
+  fill: rgba(var(--color-accent-rgb), 0.4);
+}
+
+[data-skin="hud"] [data-component="panel"]:hover .hud-accent-bar {
+  fill: rgba(var(--color-accent-rgb), 0.9);
+}
+
+[data-skin="hud"] [data-component="panel"]:hover .hud-accent-tab {
+  fill: rgba(var(--color-accent-rgb), 0.7);
+}
+
+[data-skin="hud"] [data-component="panel"]:hover .hud-indicator-dot {
+  fill: rgba(var(--color-accent-rgb), 0.5);
+}
+
+[data-skin="hud"] [data-component="panel"]:hover .hud-indicator-dot-bright {
+  fill: rgba(var(--color-accent-rgb), 1);
+}
+
+[data-skin="hud"] [data-component="panel"]:hover .hud-hatch-block {
+  fill: rgba(var(--color-accent-rgb), 0.35);
+}
+
+[data-skin="hud"] [data-component="panel"]:hover .hud-cross-mark {
+  stroke: rgba(var(--color-accent-rgb), 0.45);
+}
+
+/* ── Button: notch clip-path + L-bracket corners ── */
+[data-skin="hud"] [data-component="btn"] {
+  clip-path: var(--notch-clip);
+  --notch-size: 6px;
+}
+
+[data-skin="hud"] [data-component="btn"]::before,
+[data-skin="hud"] [data-component="btn"]::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+[data-skin="hud"] [data-component="btn"]::before {
+  top: 2px;
+  right: 2px;
+  border-top: var(--notch-corner-weight) solid var(--notch-corner-color);
+  border-right: var(--notch-corner-weight) solid var(--notch-corner-color);
+}
+
+[data-skin="hud"] [data-component="btn"]::after {
+  bottom: 2px;
+  left: 2px;
+  border-bottom: var(--notch-corner-weight) solid var(--notch-corner-color);
+  border-left: var(--notch-corner-weight) solid var(--notch-corner-color);
+}
+
+[data-skin="hud"] [data-component="btn"][data-variant="primary"]:hover:not(:disabled) {
+  box-shadow: var(--glow-accent);
+}
+
+[data-skin="hud"] [data-component="btn"][data-variant="secondary"]:hover:not(:disabled) {
+  box-shadow: var(--glow-sm);
+}
+
+[data-skin="hud"] [data-component="btn"][data-size="sm"] {
+  --notch-size: 4px;
+}
+
+[data-skin="hud"] [data-component="btn"][data-size="lg"] {
+  --notch-size: 8px;
+}
+
+/* ── SectionHeader: bracket decorators ── */
+[data-skin="hud"] [data-component="section-header"] [data-part="title"]::before {
+  content: "[";
+  margin-right: 0.35em;
+  color: var(--color-accent);
+  font-weight: 400;
+}
+
+[data-skin="hud"] [data-component="section-header"] [data-part="title"]::after {
+  content: "]";
+  margin-left: 0.35em;
+  color: var(--color-accent);
+  font-weight: 400;
+}
+
+/* ── PortableTextBody: code-style heading prefixes ── */
+[data-skin="hud"] [data-component="portable-text"] h2::before {
+  content: "// ";
+  color: var(--color-accent);
+  font-weight: 400;
+}
+
+[data-skin="hud"] [data-component="portable-text"] h3::before {
+  content: "> ";
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* ── Badge: glow variant ── */
+[data-skin="hud"] [data-component="badge"][data-variant="glow"] {
+  box-shadow: var(--glow-sm);
+}
+
+/* ── Search/Select: glow focus ── */
+[data-skin="hud"] [data-component="search-input"]:focus-within {
+  box-shadow: var(--glow-sm);
+}
+
+[data-skin="hud"] [data-component="select"]:focus-within {
+  box-shadow: var(--glow-sm);
+}
+
+/* ── Section accent lines ── */
+[data-skin="hud"] [data-component="stats-row"]::before,
+[data-skin="hud"] [data-component="stats-row"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--color-accent-rgb), 0.3),
+    transparent
+  );
+}
+
+[data-skin="hud"] [data-component="stats-row"]::before {
+  top: 0;
+}
+
+[data-skin="hud"] [data-component="stats-row"]::after {
+  bottom: 0;
+}
+
+[data-skin="hud"] [data-component="feature-grid"]::before,
+[data-skin="hud"] [data-component="rich-text-section"]::before,
+[data-skin="hud"] [data-component="image-gallery"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--color-accent-rgb), 0.3),
+    transparent
+  );
+}
+
+[data-skin="hud"] [data-component="rich-text-section"] {
+  border-left: 2px solid rgba(var(--color-accent-rgb), 0.2);
+}
+
+[data-skin="hud"] [data-component="image-gallery"] [data-part="gallery-item"]:hover {
+  box-shadow: var(--glow-sm);
+}
+
+/* ── CtaSection: radial glow ── */
+[data-skin="hud"] [data-component="cta-section"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(var(--color-accent-rgb), 0.06) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* ── SiteHero: title glow + accent text-shadow ── */
+[data-skin="hud"] [data-component="site-hero"] [data-part="title"] {
+  text-shadow:
+    0 0 80px rgba(var(--color-primary-rgb), 0.12),
+    0 4px 30px rgba(var(--black-rgb), 0.5);
+}
+
+[data-skin="hud"] [data-component="site-hero"] [data-part="title-accent"] {
+  text-shadow:
+    0 0 40px rgba(var(--color-primary-rgb), 0.4),
+    0 0 80px rgba(var(--color-primary-rgb), 0.15);
+}
+
+/* ── HeroSection: heading bracket decorators ── */
+[data-skin="hud"] [data-component="hero-section"] [data-part="heading"]::before {
+  content: "[";
+  margin-right: 0.3em;
+  color: var(--color-accent);
+  font-weight: 400;
+}
+
+[data-skin="hud"] [data-component="hero-section"] [data-part="heading"]::after {
+  content: "]";
+  margin-left: 0.3em;
+  color: var(--color-accent);
+  font-weight: 400;
+}
+
+/* ── PageHero: bracket decorators ── */
+[data-skin="hud"] [data-component="page-hero"] [data-part="heading"]::before {
+  content: "[";
+  margin-right: 0.3em;
+  color: var(--color-accent);
+  font-weight: 400;
+}
+
+[data-skin="hud"] [data-component="page-hero"] [data-part="heading"]::after {
+  content: "]";
+  margin-left: 0.3em;
+  color: var(--color-accent);
+  font-weight: 400;
+}

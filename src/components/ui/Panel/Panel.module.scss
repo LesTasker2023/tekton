@@ -1,0 +1,76 @@
+/* ============================================================================
+   Panel — Container with variant styles
+   Vanilla: bordered box with padding. Decoration added via skin decorators.
+   ============================================================================ */
+
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  transition: box-shadow var(--duration-base) var(--ease-out);
+}
+
+/* Visual shell — bg + border */
+.panelBg {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  z-index: 0;
+  transition:
+    border-color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
+}
+
+/* Content */
+.content {
+  position: relative;
+  padding: var(--space-6);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hover */
+.panel:hover .panelBg {
+  border-color: var(--border-strong);
+}
+
+/* ── Variants ── */
+
+.panel--interactive {
+  cursor: pointer;
+}
+
+.panel--interactive:hover .panelBg {
+  border-color: var(--color-primary);
+}
+
+.panel--accent .panelBg {
+  border-color: var(--border-accent);
+}
+
+.panel--danger .panelBg {
+  border-color: rgba(var(--status-danger-rgb), 0.3);
+  background: rgba(var(--status-danger-rgb), 0.05);
+}
+
+.panel--ghost .panelBg {
+  background: transparent;
+  border-color: var(--border-subtle);
+}
+
+/* Size variants */
+.panel--sm .content {
+  padding: var(--space-3) var(--space-4);
+}
+
+.panel--lg .content {
+  padding: var(--space-8) var(--space-10);
+}
+
+.panel--flush .content {
+  padding: 0;
+}

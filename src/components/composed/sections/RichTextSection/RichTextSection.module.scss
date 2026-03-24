@@ -1,0 +1,35 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   RichTextSection — Rich text content block with themed accent
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  padding: var(--space-12) var(--space-8);
+  max-width: var(--content-max-width, 1440px);
+  margin-inline: auto;
+  width: 100%;
+}
+
+.section--narrow {
+  max-width: min(720px, var(--content-max-width, 1440px));
+}
+
+.section--medium {
+  max-width: var(--content-max-width, 1440px);
+}
+
+.section--full {
+  max-width: none;
+}
+
+.body {
+  margin-top: var(--space-6);
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .section {
+    padding: var(--space-6) var(--space-3);
+    margin-left: var(--space-2);
+  }
+}

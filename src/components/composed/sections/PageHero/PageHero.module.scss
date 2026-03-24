@@ -1,0 +1,100 @@
+/* ============================================================================
+   PageHero — Compact hero for CMS inner pages
+   Vanilla: clean layout with optional bg image, breadcrumb, title, subtitle.
+   ============================================================================ */
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 200px;
+  padding: var(--space-12) var(--space-8);
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.hero--center {
+  justify-content: center;
+  text-align: center;
+}
+
+.hero--left {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+/* Background image */
+.bgImage {
+  object-fit: cover;
+  z-index: 0;
+  filter: brightness(0.3) saturate(0.6);
+}
+
+/* Overlay */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(var(--bg-base-rgb), 0.5) 0%,
+    rgba(var(--bg-base-rgb), 0.85) 100%
+  );
+  pointer-events: none;
+}
+
+.hero:not([data-has-bg]) .overlay {
+  background: none;
+}
+
+/* Content */
+.content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 640px;
+  width: 100%;
+}
+
+.hero--center .content {
+  align-items: center;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  opacity: 0.7;
+}
+
+/* Title */
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, var(--text-3xl));
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  line-height: 1.15;
+}
+
+/* Subtitle */
+.subheading {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 480px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .hero {
+    padding: var(--space-8) var(--space-4);
+    min-height: 160px;
+  }
+}

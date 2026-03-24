@@ -1,0 +1,38 @@
+/* ============================================================================
+   SectionHeader — Plain heading. Bracket decorators via skin overlay.
+   ============================================================================ */
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.label {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Size variants */
+.header--lg .label {
+  font-size: var(--text-base);
+  letter-spacing: 0.15em;
+}
+
+.header--sm .label {
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+}
+
+/* Accent color */
+.header--accent .label {
+  color: var(--color-accent);
+}

@@ -1,0 +1,83 @@
+/* ============================================================================
+   Accordion — Details/summary based with chevron rotation
+   ============================================================================ */
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* ── Item ── */
+
+.accordion__item {
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.accordion__item:last-child {
+  border-bottom: none;
+}
+
+/* ── Trigger (summary) ── */
+
+.accordion__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.accordion__trigger::-webkit-details-marker {
+  display: none;
+}
+
+.accordion__trigger::marker {
+  display: none;
+  content: "";
+}
+
+.accordion__trigger:hover {
+  background: var(--bg-hover);
+}
+
+.accordion__trigger[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Chevron ── */
+
+.accordion__chevron {
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.accordion__item[open] .accordion__chevron {
+  transform: rotate(180deg);
+}
+
+/* ── Title ── */
+
+.accordion__title {
+  flex: 1;
+}
+
+/* ── Content ── */
+
+.accordion__content {
+  padding: 0 var(--space-5) var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}

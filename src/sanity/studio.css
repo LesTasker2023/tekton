@@ -1,0 +1,20 @@
+/* ============================================================================
+   TEKTON — Sanity Studio CSS Overrides
+   Minimal overrides — keeps the default Sanity Studio look.
+   ============================================================================ */
+
+/* Subtler scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(128, 128, 128, 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(128, 128, 128, 0.5);
+}

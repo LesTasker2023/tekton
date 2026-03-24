@@ -1,0 +1,84 @@
+/* ============================================================================
+   Tabs — Underline & pill variants with keyboard navigation
+   ============================================================================ */
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Tab list ── */
+
+.tabs__list {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.tabs__list--underline {
+  border-bottom: 1px solid var(--border-subtle);
+  gap: 0;
+}
+
+.tabs__list--pills {
+  gap: var(--space-1);
+}
+
+/* ── Tab button ── */
+
+.tabs__tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+}
+
+.tabs__tab:hover:not(:disabled) {
+  color: var(--text-primary);
+}
+
+.tabs__tab:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Underline variant active */
+.tabs__list--underline .tabs__tab {
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  border-radius: 0;
+}
+
+.tabs__list--underline .tabs__tab--active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+/* Pills variant active */
+.tabs__list--pills .tabs__tab {
+  border-radius: var(--radius-md);
+}
+
+.tabs__list--pills .tabs__tab--active {
+  color: var(--text-bright);
+  background: rgba(var(--color-primary-rgb), 0.15);
+}
+
+/* ── Panel ── */
+
+.tabs__panel {
+  padding: var(--space-4) 0;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  outline: none;
+}

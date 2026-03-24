@@ -1,0 +1,100 @@
+/* ============================================================================
+   Input — Text field with label, error, helper, leading/trailing icons
+   ============================================================================ */
+
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.input--full {
+  width: 100%;
+}
+
+/* ── Label ── */
+
+.input__label {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.01em;
+}
+
+/* ── Field wrapper ── */
+
+.input__field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.input__field:focus-within {
+  border-color: var(--color-primary);
+}
+
+.input--error .input__field {
+  border-color: var(--status-danger);
+}
+
+/* ── Native input ── */
+
+.input__native {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  outline: none;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.input__native::placeholder {
+  color: var(--text-muted);
+}
+
+/* ── Icons ── */
+
+.input__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+/* ── Error & Helper ── */
+
+.input__error {
+  font-size: var(--text-xs);
+  color: var(--status-danger);
+}
+
+.input__helper {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+/* ── Sizes ── */
+
+.input--sm .input__field {
+  padding: var(--space-1) var(--space-2);
+}
+
+.input--sm .input__native {
+  font-size: var(--text-xs);
+}
+
+.input--lg .input__field {
+  padding: var(--space-3) var(--space-4);
+}
+
+.input--lg .input__native {
+  font-size: var(--text-base);
+}

@@ -1,0 +1,67 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Panel, Button, SectionHeader } from "@/components/ui";
+import type { PanelVariant } from "@/components/ui";
+import { fadeIn } from "@/lib/motion";
+import styles from "./CtaSection.module.scss";
+
+interface CtaSectionProps {
+  heading: string;
+  body?: string;
+  primaryAction?: { label: string; href: string };
+  secondaryAction?: { label?: string; href?: string };
+  variant?: "default" | "accent" | "danger";
+}
+
+export function CtaSection({
+  heading,
+  body,
+  primaryAction,
+  secondaryAction,
+  variant = "default",
+}: CtaSectionProps) {
+  const panelVariant: PanelVariant =
+    variant === "accent"
+      ? "accent"
+      : variant === "danger"
+        ? "accent"
+        : "default";
+
+  return (
+    <motion.section
+      className={styles.section}
+      data-component="cta-section"
+      data-variant={variant}
+      variants={fadeIn}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-40px" }}
+    >
+      <Panel variant={panelVariant} size="lg">
+        <div className={styles.inner}>
+          <div className={styles.text}>
+            <SectionHeader title={heading} accent={variant === "accent"} />
+            {body && <p className={styles.body}>{body}</p>}
+          </div>
+          <div className={styles.actions}>
+            {primaryAction?.label && primaryAction?.href && (
+              <a href={primaryAction.href} className={styles.link}>
+                <Button variant="primary" size="lg">
+                  {primaryAction.label}
+                </Button>
+              </a>
+            )}
+            {secondaryAction?.label && secondaryAction?.href && (
+              <a href={secondaryAction.href} className={styles.link}>
+                <Button variant="secondary" size="lg">
+                  {secondaryAction.label}
+                </Button>
+              </a>
+            )}
+          </div>
+        </div>
+      </Panel>
+    </motion.section>
+  );
+}

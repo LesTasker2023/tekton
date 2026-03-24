@@ -1,0 +1,27 @@
+/* Studio page — exit button overlay */
+.exitLink {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-size: 13px;
+  font-family: var(--font-mono, monospace);
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.exitLink:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}

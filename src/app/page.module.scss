@@ -1,0 +1,19 @@
+/* Homepage */
+.page {
+  padding: 0;
+}
+
+/* Empty state — shown when no homepage sections exist in the CMS */
+.empty {
+  padding: var(--space-16) var(--space-8);
+  text-align: center;
+}
+
+.emptyHeading {
+  font-size: var(--text-3xl);
+  margin-bottom: var(--space-4);
+}
+
+.emptyText {
+  color: var(--text-secondary);
+}

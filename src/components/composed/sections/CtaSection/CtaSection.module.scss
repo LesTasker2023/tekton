@@ -1,0 +1,79 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   CtaSection — Call-to-action with themed panel wrapper
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.section {
+  position: relative;
+  padding: var(--space-8);
+  max-width: var(--content-max-width, 1440px);
+  margin-inline: auto;
+  width: 100%;
+}
+
+.section[data-variant="danger"] {
+  --color-primary-rgb: var(--status-danger-rgb);
+  --color-primary: var(--status-danger);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+  flex-wrap: wrap;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  flex: 1;
+  min-width: 280px;
+}
+
+.body {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 520px;
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-4);
+  flex-shrink: 0;
+}
+
+.link {
+  text-decoration: none;
+}
+
+/* Subtle radial glow behind CTA */
+.section::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 500px;
+  height: 250px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(var(--color-primary-rgb), 0.04) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .inner {
+    flex-direction: column;
+    text-align: center;
+    align-items: stretch;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+}

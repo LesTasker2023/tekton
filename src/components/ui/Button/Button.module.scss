@@ -1,0 +1,94 @@
+/* ============================================================================
+   Button — Primary, Secondary, Ghost
+   Vanilla: standard button with border-radius. Notch/brackets via skin.
+   ============================================================================ */
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-5);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Primary ── */
+
+.btn--primary {
+  background: var(--color-accent);
+  color: var(--text-on-accent);
+  border-color: var(--color-accent);
+}
+
+.btn--primary:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+.btn--primary:active:not(:disabled) {
+  filter: brightness(0.95);
+}
+
+/* ── Secondary ── */
+
+.btn--secondary {
+  background: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background: rgba(var(--color-primary-rgb), 0.1);
+}
+
+/* ── Ghost ── */
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border-subtle);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  color: var(--text-primary);
+  border-color: var(--border-default);
+  background: var(--bg-hover);
+}
+
+/* ── Sizes ── */
+
+.btn--sm {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+}
+
+.btn--lg {
+  padding: 0.875rem var(--space-8);
+  font-size: var(--text-base);
+}
+
+/* ── Full width ── */
+.btn--full {
+  width: 100%;
+}
+
+/* ── Icon only ── */
+.btn--icon {
+  padding: var(--space-2);
+  aspect-ratio: 1;
+}
