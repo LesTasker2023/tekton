@@ -5,12 +5,12 @@ import Link from "next/link";
 import { urlFor } from "@/sanity/image";
 import { Badge } from "@/components/ui";
 import { type Post, formatDate } from "./news.types";
+import type { SanityImageObject } from "@/types/sanity";
 import styles from "./page.module.scss";
 
 interface FeaturedNewsCardProps {
   post: Post;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  placeholder?: any;
+  placeholder?: SanityImageObject | null;
 }
 
 export function FeaturedNewsCard({ post, placeholder }: FeaturedNewsCardProps) {

@@ -7,13 +7,15 @@ import { FeatureGridSection } from "./FeatureGridSection";
 import { CtaSection } from "./CtaSection";
 import { RichTextSection } from "./RichTextSection";
 import { ImageGallerySection } from "./ImageGallerySection";
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { TestimonialSection } from "./TestimonialSection";
+import { PricingSection } from "./PricingSection";
+import { LogoCloudSection } from "./LogoCloudSection";
 
 /**
  * Registry: maps Sanity section `_type` → React component.
  * Add new section types here as they're built.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- dynamic registry: sections are typed at their own boundaries
 const SECTION_MAP: Record<string, React.ComponentType<any>> = {
   heroSection: HeroSection,
   pageHeroSection: PageHero,
@@ -22,12 +24,15 @@ const SECTION_MAP: Record<string, React.ComponentType<any>> = {
   ctaSection: CtaSection,
   richTextSection: RichTextSection,
   imageGallerySection: ImageGallerySection,
+  testimonialSection: TestimonialSection,
+  pricingSection: PricingSection,
+  logoCloudSection: LogoCloudSection,
 };
 
 interface Section {
   _type: string;
   _key: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 interface SectionRendererProps {

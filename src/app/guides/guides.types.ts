@@ -1,5 +1,7 @@
 /* ── Shared types & helpers for guides ── */
 
+import type { SanityImageObject } from "@/types/sanity";
+
 export interface Guide {
   _id: string;
   title: string;
@@ -8,8 +10,7 @@ export interface Guide {
   difficulty?: string;
   order?: number;
   publishedAt?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  coverImage?: any;
+  coverImage?: SanityImageObject;
   category?: { title: string; slug: { current: string } };
 }
 

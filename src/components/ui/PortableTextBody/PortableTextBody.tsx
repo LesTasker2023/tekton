@@ -1,12 +1,29 @@
 import {
   PortableText,
   type PortableTextReactComponents,
+  type PortableTextBlock,
 } from "@portabletext/react";
 import Image from "next/image";
 import { urlFor } from "@/sanity/image";
 import styles from "./PortableTextBody.module.scss";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
+interface ImageWithAltValue {
+  asset?: { _ref: string };
+  alt?: string;
+  caption?: string;
+}
+
+interface CodeBlockValue {
+  code: string;
+  language?: string;
+  filename?: string;
+}
+
+interface CalloutValue {
+  tone?: string;
+  body?: PortableTextBlock[] | string;
+}
+
 const components: Partial<PortableTextReactComponents> = {
   block: {
     h2: ({ children }) => <h2 className={styles.h2}>{children}</h2>,
@@ -47,7 +64,7 @@ const components: Partial<PortableTextReactComponents> = {
     },
   },
   types: {
-    imageWithAlt: ({ value }: { value: any }) => {
+    imageWithAlt: ({ value }: { value: ImageWithAltValue }) => {
       if (!value?.asset) return null;
       return (
         <figure className={styles.figure}>
@@ -64,7 +81,7 @@ const components: Partial<PortableTextReactComponents> = {
         </figure>
       );
     },
-    codeBlock: ({ value }: { value: any }) => (
+    codeBlock: ({ value }: { value: CodeBlockValue }) => (
       <div className={styles.codeWrapper}>
         {value.filename && (
           <div className={styles.codeFilename}>{value.filename}</div>
@@ -74,7 +91,7 @@ const components: Partial<PortableTextReactComponents> = {
         </pre>
       </div>
     ),
-    callout: ({ value }: { value: any }) => (
+    callout: ({ value }: { value: CalloutValue }) => (
       <aside className={styles.callout} data-tone={value.tone}>
         {Array.isArray(value.body) ? (
           <PortableText value={value.body} />
@@ -85,10 +102,9 @@ const components: Partial<PortableTextReactComponents> = {
     ),
   },
 };
-/* eslint-enable @typescript-eslint/no-explicit-any */
 
 interface Props {
-  value: any; // Portable Text array
+  value: PortableTextBlock[];
 }
 
 export function PortableTextBody({ value }: Props) {

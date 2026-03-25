@@ -1,5 +1,7 @@
 /* ── Shared types & helpers for news ── */
 
+import type { SanityImageObject } from "@/types/sanity";
+
 export interface Post {
   _id: string;
   title: string;
@@ -7,10 +9,8 @@ export interface Post {
   excerpt?: string;
   publishedAt?: string;
   featured?: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  coverImage?: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  author?: { name: string; avatar?: any };
+  coverImage?: SanityImageObject;
+  author?: { name: string; avatar?: SanityImageObject };
   categories?: { title: string; slug: { current: string } }[];
 }
 

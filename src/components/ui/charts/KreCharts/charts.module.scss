@@ -75,6 +75,12 @@
   color: var(--text-muted);
 }
 
+/* ── Pie chart + legend flex row ── */
+.pieRow {
+  display: flex;
+  align-items: center;
+}
+
 /* ── Pie legend ── */
 .pieLegend {
   display: flex;

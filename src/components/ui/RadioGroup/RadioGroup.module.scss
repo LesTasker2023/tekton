@@ -1,0 +1,132 @@
+/* ============================================================================
+   RadioGroup — Group of radio buttons with optional descriptions
+   ============================================================================ */
+
+.radio-group {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.radio-group--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Legend ── */
+
+.radio-group__legend {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.01em;
+  margin-bottom: var(--space-2);
+}
+
+/* ── List ── */
+
+.radio-group__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.radio-group--horizontal .radio-group__list {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+/* ── Item ── */
+
+.radio-group__item {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  cursor: pointer;
+  user-select: none;
+}
+
+.radio-group__item--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Hidden input ── */
+
+.radio-group__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Custom circle ── */
+
+.radio-group__circle {
+  position: relative;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  border: 1px solid var(--border-default);
+  border-radius: 50%;
+  background: var(--bg-surface);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+/* Inner dot */
+.radio-group__circle::after {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: transparent;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+/* Selected state */
+.radio-group__input:checked + .radio-group__circle {
+  border-color: var(--color-primary);
+  background: rgba(var(--color-primary-rgb), 0.2);
+}
+
+.radio-group__input:checked + .radio-group__circle::after {
+  background: var(--color-primary);
+}
+
+/* Focus ring */
+.radio-group__input:focus-visible + .radio-group__circle {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ── Text ── */
+
+.radio-group__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.radio-group__label {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.radio-group__description {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  line-height: 1.4;
+}

@@ -1,0 +1,218 @@
+/* ============================================================================
+   Corporate Skin — Clean, professional aesthetic for business/agency sites
+   All rules scoped to [data-skin="corporate"] so they load ONLY when active.
+   Selectors use data-component attributes (not CSS module class names).
+   ============================================================================ */
+
+/* ── Token overrides ── */
+[data-skin="corporate"] {
+  /* Softer backgrounds — warm gray instead of pure black */
+  --bg-base: #fafafa;
+  --bg-base-rgb: 250, 250, 250;
+  --bg-deep: #ffffff;
+  --bg-deep-rgb: 255, 255, 255;
+  --bg-surface: #ffffff;
+  --bg-panel: rgba(255, 255, 255, 0.95);
+  --bg-elevated: #f5f5f5;
+  --bg-hover: rgba(0, 0, 0, 0.04);
+  --bg-active: rgba(0, 0, 0, 0.08);
+
+  /* Dark text on light backgrounds */
+  --text-primary: #1a1a2e;
+  --text-secondary: #4a4a5a;
+  --text-muted: #8a8a9a;
+  --text-accent: var(--color-accent);
+  --text-bright: #0a0a1a;
+  --text-on-accent: #ffffff;
+
+  /* Subtle borders */
+  --border-subtle: rgba(0, 0, 0, 0.06);
+  --border-default: rgba(0, 0, 0, 0.12);
+  --border-strong: rgba(0, 0, 0, 0.2);
+  --border-accent: rgba(var(--color-accent-rgb), 0.3);
+
+  /* Refined shadows instead of glows */
+  --shadow-dropdown: 0 4px 16px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+  --glow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --glow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --glow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --glow-accent: 0 4px 16px rgba(var(--color-accent-rgb), 0.15);
+
+  /* Utility overrides for light mode */
+  --white-rgb: 255, 255, 255;
+  --black-rgb: 0, 0, 0;
+  --overlay-backdrop: rgba(0, 0, 0, 0.3);
+}
+
+/* ── Panel: clean card with subtle shadow ── */
+[data-skin="corporate"] [data-component="panel"] {
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+[data-skin="corporate"] [data-component="panel"][data-variant="interactive"]:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border-color: var(--border-default);
+}
+
+[data-skin="corporate"] [data-component="panel"][data-variant="accent"] {
+  border-color: rgba(var(--color-accent-rgb), 0.2);
+}
+
+/* ── Button: rounded, subtle hover ── */
+[data-skin="corporate"] [data-component="btn"] {
+  border-radius: 8px;
+  font-weight: 500;
+  letter-spacing: 0;
+  transition: all 0.2s ease;
+}
+
+[data-skin="corporate"] [data-component="btn"][data-variant="primary"] {
+  box-shadow: 0 1px 3px rgba(var(--color-accent-rgb), 0.2);
+}
+
+[data-skin="corporate"] [data-component="btn"][data-variant="primary"]:hover:not(:disabled) {
+  box-shadow: 0 4px 12px rgba(var(--color-accent-rgb), 0.25);
+  transform: translateY(-1px);
+}
+
+[data-skin="corporate"] [data-component="btn"][data-variant="secondary"]:hover:not(:disabled) {
+  background: var(--bg-hover);
+}
+
+[data-skin="corporate"] [data-component="btn"][data-size="lg"] {
+  border-radius: 10px;
+}
+
+/* ── SectionHeader: clean underline instead of brackets ── */
+[data-skin="corporate"] [data-component="section-header"] [data-part="title"] {
+  position: relative;
+  padding-bottom: 0.5em;
+}
+
+[data-skin="corporate"] [data-component="section-header"] [data-part="title"]::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 48px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--color-accent);
+}
+
+/* ── Card: elevated hover ── */
+[data-skin="corporate"] [data-component="card"] {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ── Badge: pill shape ── */
+[data-skin="corporate"] [data-component="badge"] {
+  border-radius: 100px;
+  font-weight: 500;
+}
+
+/* ── Search & Select: rounded ── */
+[data-skin="corporate"] [data-component="search-input"],
+[data-skin="corporate"] [data-component="select"] {
+  border-radius: 8px;
+}
+
+[data-skin="corporate"] [data-component="search-input"]:focus-within,
+[data-skin="corporate"] [data-component="select"]:focus-within {
+  box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb), 0.15);
+}
+
+/* ── Section accent: subtle top border ── */
+[data-skin="corporate"] [data-component="stats-row"],
+[data-skin="corporate"] [data-component="feature-grid"],
+[data-skin="corporate"] [data-component="rich-text-section"],
+[data-skin="corporate"] [data-component="image-gallery"] {
+  position: relative;
+}
+
+[data-skin="corporate"] [data-component="stats-row"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+/* ── CtaSection: gradient background ── */
+[data-skin="corporate"] [data-component="cta-section"] [data-component="panel"] {
+  background: linear-gradient(
+    135deg,
+    rgba(var(--color-accent-rgb), 0.04) 0%,
+    rgba(var(--color-accent-rgb), 0.01) 100%
+  );
+}
+
+/* ── SiteHero: clean gradient overlay ── */
+[data-skin="corporate"] [data-component="site-hero"] [data-part="title"] {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* ── PageHero: subtle gradient ── */
+[data-skin="corporate"] [data-component="page-hero"] [data-part="heading"] {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* ── HeroSection: clean look ── */
+[data-skin="corporate"] [data-component="hero-section"] [data-part="heading"] {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* ── Image gallery: rounded corners ── */
+[data-skin="corporate"] [data-component="image-gallery"] [data-part="gallery-item"] {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+[data-skin="corporate"] [data-component="image-gallery"] [data-part="gallery-item"]:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* ── Tooltip: refined ── */
+[data-skin="corporate"] [data-component="tooltip"] {
+  border-radius: 6px;
+}
+
+/* ── Drawer: clean shadow ── */
+[data-skin="corporate"] [data-component="drawer"] [data-open="true"] {
+  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.1);
+}
+
+/* ── Toggle: smoother ── */
+[data-skin="corporate"] [data-component="toggle"] {
+  border-radius: 100px;
+}
+
+/* ── Stat block: clean divider ── */
+[data-skin="corporate"] [data-component="stat-block"] {
+  text-align: center;
+}
+
+/* ── PortableTextBody: clean headings ── */
+[data-skin="corporate"] [data-component="portable-text"] h2 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+[data-skin="corporate"] [data-component="portable-text"] h3 {
+  font-weight: 600;
+}
+
+/* ── Event calendar: refined ── */
+[data-skin="corporate"] [data-component="event-calendar"] {
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+}

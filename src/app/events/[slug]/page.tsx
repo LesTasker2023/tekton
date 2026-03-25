@@ -6,6 +6,12 @@ import { urlFor } from "@/sanity/image";
 import { getPlaceholderImage } from "@/sanity/getPlaceholderImage";
 import { PortableTextBody } from "@/components/ui/PortableTextBody";
 import { JsonLd, eventSchema } from "@/lib/jsonLd";
+import {
+  formatDateRange,
+  formatTime,
+  getEventStatus,
+  EVENT_TYPE_LABELS,
+} from "@/lib/eventHelpers";
 import Image from "next/image";
 import Link from "next/link";
 import { CalendarDays, MapPin } from "lucide-react";
@@ -61,51 +67,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {};
   }
 }
-
-/* ── Helpers ── */
-function formatDate(dateStr: string) {
-  return new Date(dateStr).toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-}
-
-function formatTime(dateStr: string) {
-  return new Date(dateStr).toLocaleTimeString("en-GB", {
-    hour: "2-digit",
-    minute: "2-digit",
-    timeZoneName: "short",
-  });
-}
-
-function formatDateRange(start: string, end?: string) {
-  const s = formatDate(start);
-  if (!end) return s;
-  const e = formatDate(end);
-  return s === e ? s : `${s} — ${e}`;
-}
-
-function getEventStatus(
-  start: string,
-  end?: string,
-): "upcoming" | "live" | "past" {
-  const now = Date.now();
-  const s = new Date(start).getTime();
-  const e = end ? new Date(end).getTime() : s + 86400000;
-  if (now < s) return "upcoming";
-  if (now <= e) return "live";
-  return "past";
-}
-
-const EVENT_TYPE_LABELS: Record<string, string> = {
-  meetup: "Meetup",
-  workshop: "Workshop",
-  webinar: "Webinar",
-  launch: "Launch",
-  conference: "Conference",
-  special: "Special",
-};
 
 /* ── Page ── */
 export default async function EventPage({ params }: Props) {

@@ -1,5 +1,7 @@
 /* ── Shared types & helpers for events ── */
 
+import type { SanityImageObject } from "@/types/sanity";
+
 export interface GameEvent {
   _id: string;
   title: string;
@@ -10,8 +12,7 @@ export interface GameEvent {
   location?: string;
   eventType?: string;
   featured?: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  coverImage?: any;
+  coverImage?: SanityImageObject;
 }
 
 export type ViewMode = "list" | "calendar";

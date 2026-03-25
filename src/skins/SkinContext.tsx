@@ -41,6 +41,11 @@ function resolveSkin(name: string): SkinConfig {
     const { hudSkin } = require("./hud") as { hudSkin: SkinConfig };
     return hudSkin;
   }
+  if (name === "corporate") {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { corporateSkin } = require("./corporate") as { corporateSkin: SkinConfig };
+    return corporateSkin;
+  }
   return DEFAULT_SKIN;
 }
 

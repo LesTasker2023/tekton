@@ -5,12 +5,12 @@ import Link from "next/link";
 import { urlFor } from "@/sanity/image";
 import { Newspaper, Star } from "lucide-react";
 import { type Post, formatDate } from "./news.types";
+import type { SanityImageObject } from "@/types/sanity";
 import styles from "./page.module.scss";
 
 interface NewsCardProps {
   post: Post;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  placeholder?: any;
+  placeholder?: SanityImageObject | null;
 }
 
 export function NewsCard({ post, placeholder }: NewsCardProps) {

@@ -3,8 +3,9 @@
    ============================================================================ */
 
 /* Fonts loaded via next/font in layout.tsx — no @import needed */
-@import "./tokens.scss";
-@import "../skins/hud/hud.skin.scss";
+@use "./tokens.scss" as *;
+@use "../skins/hud/hud.skin.scss" as *;
+@use "../skins/corporate/corporate.skin.scss" as *;
 
 /* ── Reset ── */
 *,

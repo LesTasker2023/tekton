@@ -1,0 +1,6 @@
+/* Override app-shell styles that break Storybook scrolling.
+   In the real app, NavShell handles scroll; in Storybook there's no shell. */
+body {
+  height: auto !important;
+  overflow: auto !important;
+}

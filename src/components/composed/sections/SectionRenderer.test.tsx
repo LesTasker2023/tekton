@@ -44,6 +44,24 @@ vi.mock("./ImageGallerySection", () => ({
   ),
 }));
 
+vi.mock("./TestimonialSection", () => ({
+  TestimonialSection: (props: Record<string, unknown>) => (
+    <div data-testid="testimonial-section">{JSON.stringify(props)}</div>
+  ),
+}));
+
+vi.mock("./PricingSection", () => ({
+  PricingSection: (props: Record<string, unknown>) => (
+    <div data-testid="pricing-section">{JSON.stringify(props)}</div>
+  ),
+}));
+
+vi.mock("./LogoCloudSection", () => ({
+  LogoCloudSection: (props: Record<string, unknown>) => (
+    <div data-testid="logo-cloud-section">{JSON.stringify(props)}</div>
+  ),
+}));
+
 import { SectionRenderer } from "./SectionRenderer";
 
 /* ── Tests ── */

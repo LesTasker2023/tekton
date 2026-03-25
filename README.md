@@ -7,7 +7,7 @@ First, run the development server:
 ```bash
 npm run dev
 # or
-yarn dev
+yarn devgit remote add origin https://github.com/projectdelta2026-bot/tekton.git
 # or
 pnpm dev
 # or

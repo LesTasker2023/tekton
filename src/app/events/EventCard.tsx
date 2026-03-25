@@ -22,6 +22,7 @@ import {
   formatTime,
   EVENT_TYPE_META,
 } from "./events.types";
+import type { SanityImageObject } from "@/types/sanity";
 import styles from "./page.module.scss";
 
 const ICON_MAP: Record<string, React.ReactNode> = {
@@ -35,8 +36,7 @@ const ICON_MAP: Record<string, React.ReactNode> = {
 
 interface EventCardProps {
   event: GameEvent;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  placeholder?: any;
+  placeholder?: SanityImageObject | null;
 }
 
 export function EventCard({ event, placeholder }: EventCardProps) {

@@ -7,12 +7,12 @@ import { Badge } from "@/components/ui";
 import type { BadgeVariant } from "@/components/ui/Badge/Badge";
 import { BookOpen } from "lucide-react";
 import { type Guide, DIFF_META } from "./guides.types";
+import type { SanityImageObject } from "@/types/sanity";
 import styles from "./page.module.scss";
 
 interface GuideCardProps {
   guide: Guide;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  placeholder?: any;
+  placeholder?: SanityImageObject | null;
 }
 
 export function GuideCard({ guide, placeholder }: GuideCardProps) {

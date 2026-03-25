@@ -6,6 +6,7 @@ import { NavShellServer } from "@/components/layout";
 import { TopBarProvider } from "@/context/TopBarContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { SkinProvider } from "@/skins/SkinContext";
+import { GoogleAnalytics } from "@/components/layout/GoogleAnalytics";
 import { SanityLive } from "@/sanity/live";
 import { getClient } from "@/sanity/client";
 import { SITE_SETTINGS_QUERY } from "@/sanity/queries";
@@ -128,6 +129,7 @@ export default async function RootLayout({
   let defaultMode: "dark" | "light" | undefined;
   let skinName = "vanilla";
   let contentWidth = "1440";
+  let gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "";
   try {
     const settings = await getClient(false).fetch(
       SITE_SETTINGS_QUERY,
@@ -138,6 +140,7 @@ export default async function RootLayout({
     defaultMode = settings?.defaultThemeMode;
     if (settings?.skin) skinName = settings.skin;
     if (settings?.contentWidth) contentWidth = settings.contentWidth;
+    if (settings?.gaMeasurementId) gaMeasurementId = settings.gaMeasurementId;
   } catch {
     // Sanity not configured yet
   }
@@ -157,6 +160,7 @@ export default async function RootLayout({
             </TopBarProvider>
           </ThemeProvider>
         </SkinProvider>
+        {gaMeasurementId && <GoogleAnalytics measurementId={gaMeasurementId} />}
         {(await draftMode()).isEnabled && (
           <>
             <SanityLive />

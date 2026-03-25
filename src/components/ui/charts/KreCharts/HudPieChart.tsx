@@ -75,7 +75,7 @@ export function HudPieChart({
     <div className={styles.chartWrap}>
       <div className={styles.chartInner}>
         {title && <div className={styles.chartTitle}>{title}</div>}
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div className={styles.pieRow}>
           <ResponsiveContainer width="100%" height={height}>
             <PieChart>
               <defs>

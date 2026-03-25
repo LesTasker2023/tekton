@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 import { SectionHeader } from "@/components/ui";
 import { PortableTextBody } from "@/components/ui/PortableTextBody/PortableTextBody";
 import { fadeIn } from "@/lib/motion";
+import type { PortableTextBlock } from "@portabletext/react";
 import styles from "./RichTextSection.module.scss";
 
 interface RichTextSectionProps {
   heading?: string;
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  richBody: any;
+  richBody: PortableTextBlock[];
   maxWidth?: "narrow" | "medium" | "full";
 }
 
