@@ -25,7 +25,14 @@ interface ItemCategory {
 }
 
 interface ItemImage {
-  asset?: { _id: string; url: string; metadata?: { lqip?: string; dimensions?: { width: number; height: number } } };
+  asset?: {
+    _id: string;
+    url: string;
+    metadata?: {
+      lqip?: string;
+      dimensions?: { width: number; height: number };
+    };
+  };
   alt?: string;
   hotspot?: unknown;
   crop?: unknown;
@@ -125,12 +132,6 @@ export default function CatalogHub({
       <div className={styles.empty}>
         <Package size={48} className={styles.emptyIcon} />
         <h1 className={styles.emptyTitle}>No Items Yet</h1>
-        <p className={styles.emptyText}>
-          Create your first catalog item in the Sanity Studio.
-        </p>
-        <Link href="/studio" className={styles.studioLink}>
-          Open Studio →
-        </Link>
       </div>
     );
   }
@@ -220,7 +221,11 @@ export default function CatalogHub({
               />
             ) : placeholder ? (
               <Image
-                src={urlFor(placeholder).width(800).height(800).auto("format").url()}
+                src={urlFor(placeholder)
+                  .width(800)
+                  .height(800)
+                  .auto("format")
+                  .url()}
                 alt="Placeholder"
                 width={800}
                 height={800}
@@ -257,7 +262,10 @@ export default function CatalogHub({
               )}
               {featuredItem.compareAtPrice != null && (
                 <span className={styles.comparePrice}>
-                  {formatPrice(featuredItem.compareAtPrice, featuredItem.currency)}
+                  {formatPrice(
+                    featuredItem.compareAtPrice,
+                    featuredItem.currency,
+                  )}
                 </span>
               )}
             </div>

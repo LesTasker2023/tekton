@@ -7,7 +7,12 @@ import { usePlaceholderImage } from "@/context/PlaceholderImageContext";
 import { EventCalendar } from "@/components/ui/EventCalendar";
 import { staggerContainer, fadeUp } from "@/lib/motion";
 import { CalendarDays } from "lucide-react";
-import { type GameEvent, type ViewMode, type TimeFilter, getEventStatus } from "./events.types";
+import {
+  type GameEvent,
+  type ViewMode,
+  type TimeFilter,
+  getEventStatus,
+} from "./events.types";
 import { EventCard } from "./EventCard";
 import { EventsToolbar } from "./EventsToolbar";
 import { EventsFilterChip } from "./EventsFilterChip";
@@ -64,8 +69,16 @@ export default function EventsHub({ events }: { events: GameEvent[] }) {
       result = result.filter((e) => {
         const start = new Date(e.startDate);
         const end = e.endDate ? new Date(e.endDate) : undefined;
-        const sd = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
-        const ss = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+        const sd = new Date(
+          selectedDate.getFullYear(),
+          selectedDate.getMonth(),
+          selectedDate.getDate(),
+        );
+        const ss = new Date(
+          start.getFullYear(),
+          start.getMonth(),
+          start.getDate(),
+        );
         if (!end) return sd.getTime() === ss.getTime();
         const se = new Date(end.getFullYear(), end.getMonth(), end.getDate());
         return sd >= ss && sd <= se;
@@ -97,12 +110,6 @@ export default function EventsHub({ events }: { events: GameEvent[] }) {
       <div className={styles.empty}>
         <CalendarDays size={48} className={styles.emptyIcon} />
         <h1 className={styles.emptyTitle}>No Events Yet</h1>
-        <p className={styles.emptyText}>
-          Create your first event in the Sanity Studio.
-        </p>
-        <Link href="/studio" className={styles.studioLink}>
-          Open Studio →
-        </Link>
       </div>
     );
   }
@@ -138,7 +145,11 @@ export default function EventsHub({ events }: { events: GameEvent[] }) {
         onClear={clearFilters}
       />
 
-      <div className={viewMode === "calendar" ? styles.calendarLayout : styles.listLayout}>
+      <div
+        className={
+          viewMode === "calendar" ? styles.calendarLayout : styles.listLayout
+        }
+      >
         {viewMode === "calendar" && (
           <aside className={styles.calendarSidebar}>
             <EventCalendar
