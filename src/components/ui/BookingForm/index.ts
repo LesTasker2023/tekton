@@ -1,2 +1,7 @@
 export { BookingForm } from "./BookingForm";
-export type { BookingFormProps, AvailableSlot } from "./BookingForm";
+export type {
+  BookingFormProps,
+  BookingSettings,
+  ExistingBooking,
+  DayHours,
+} from "./BookingForm";

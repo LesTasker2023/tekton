@@ -24,6 +24,24 @@ interface CalloutValue {
   body?: PortableTextBlock[] | string;
 }
 
+interface VideoEmbedValue {
+  url?: string;
+  caption?: string;
+}
+
+function toEmbedUrl(url?: string): string | null {
+  if (!url) return null;
+  // YouTube
+  const ytMatch = url.match(
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]+)/,
+  );
+  if (ytMatch) return `https://www.youtube-nocookie.com/embed/${ytMatch[1]}`;
+  // Vimeo
+  const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
+  if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
+  return null;
+}
+
 const components: Partial<PortableTextReactComponents> = {
   block: {
     h2: ({ children, value }) => <h2 id={value._key} className={styles.h2}>{children}</h2>,
@@ -100,6 +118,26 @@ const components: Partial<PortableTextReactComponents> = {
         )}
       </aside>
     ),
+    videoEmbed: ({ value }: { value: VideoEmbedValue }) => {
+      const embedUrl = toEmbedUrl(value.url);
+      if (!embedUrl) return null;
+      return (
+        <figure className={styles.videoFigure}>
+          <div className={styles.videoWrapper}>
+            <iframe
+              src={embedUrl}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className={styles.videoIframe}
+              title={value.caption || "Embedded video"}
+            />
+          </div>
+          {value.caption && (
+            <figcaption className={styles.caption}>{value.caption}</figcaption>
+          )}
+        </figure>
+      );
+    },
   },
 };
 

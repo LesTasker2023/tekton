@@ -9,8 +9,8 @@ interface BookingEmailParams {
   customerEmail: string;
   customerPhone?: string;
   itemTitle: string;
-  date: string;
-  timeSlot: string;
+  date?: string;
+  timeSlot?: string;
   message?: string;
 }
 
@@ -25,12 +25,14 @@ export async function sendBookingNotification({
   timeSlot,
   message,
 }: BookingEmailParams) {
+  const isEnquiry = !date && !timeSlot;
+
   const lines = [
-    `New booking received:`,
+    isEnquiry ? `New enquiry received:` : `New booking received:`,
     ``,
     `Service: ${itemTitle}`,
-    `Date: ${date}`,
-    `Time: ${timeSlot}`,
+    date ? `Date: ${date}` : null,
+    timeSlot ? `Time: ${timeSlot}` : null,
     ``,
     `Customer: ${customerName}`,
     `Email: ${customerEmail}`,
@@ -40,10 +42,14 @@ export async function sendBookingNotification({
     .filter(Boolean)
     .join("\n");
 
+  const subject = isEnquiry
+    ? `New enquiry: ${itemTitle}`
+    : `New booking: ${itemTitle} — ${date} ${timeSlot}`;
+
   await resend.emails.send({
     from: `${fromName} <onboarding@resend.dev>`,
     to,
-    subject: `New booking: ${itemTitle} — ${date} ${timeSlot}`,
+    subject,
     text: lines,
   });
 }

@@ -16,6 +16,7 @@ import { richTextType } from "@/sanity/objects/richText";
 import { codeBlockType } from "@/sanity/objects/codeBlock";
 import { calloutType } from "@/sanity/objects/callout";
 import { imageWithAltType } from "@/sanity/objects/imageWithAlt";
+import { videoEmbedType } from "@/sanity/objects/videoEmbed";
 import { ctaLinkType } from "@/sanity/objects/ctaLink";
 import { seoFieldsType } from "@/sanity/objects/seoFields";
 
@@ -44,6 +45,7 @@ export const coreSchemas: SchemaTypeDefinition[] = [
   codeBlockType,
   calloutType,
   imageWithAltType,
+  videoEmbedType,
   ctaLinkType,
   seoFieldsType,
   // Page Builder sections

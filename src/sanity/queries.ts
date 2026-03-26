@@ -249,27 +249,27 @@ export const ITEM_CATEGORIES_QUERY = groq`
 `;
 
 /* ─── Booking ─── */
-export const AVAILABLE_SLOTS_QUERY = groq`
-  *[_type == "availabilitySlot"
-    && item._ref == $itemId
-    && date >= $today
-    && booked < capacity
-  ] | order(date asc, startTime asc) {
-    _id,
-    _rev,
-    date,
-    startTime,
-    endTime,
-    capacity,
-    booked
-  }
-`;
-
 export const BOOKING_SETTINGS_QUERY = groq`
   *[_type == "siteSettings"][0] {
     bookingAdminEmail,
     bookingEmailFromName,
-    bookingConfirmationMessage
+    bookingConfirmationMessage,
+    bookingOpeningHours[] { day, open, close },
+    bookingSlotDuration,
+    bookingMaxPerSlot,
+    bookingAdvanceDays
+  }
+`;
+
+export const BOOKINGS_FOR_ITEM_QUERY = groq`
+  *[_type == "booking"
+    && item._ref == $itemId
+    && date >= $fromDate
+    && date <= $toDate
+    && status != "cancelled"
+  ] {
+    date,
+    timeSlot
   }
 `;
 

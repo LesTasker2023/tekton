@@ -253,6 +253,90 @@ export const siteSettingsType = defineType({
       group: "booking",
       description: "Shown to the customer after a successful booking.",
     }),
+    defineField({
+      name: "bookingOpeningHours",
+      title: "Opening Hours",
+      type: "array",
+      group: "booking",
+      description: "Days and times available for booking. Leave empty to allow any day 09:00–17:00.",
+      of: [
+        {
+          type: "object",
+          name: "dayHours",
+          fields: [
+            defineField({
+              name: "day",
+              title: "Day",
+              type: "string",
+              options: {
+                list: [
+                  { title: "Monday", value: "monday" },
+                  { title: "Tuesday", value: "tuesday" },
+                  { title: "Wednesday", value: "wednesday" },
+                  { title: "Thursday", value: "thursday" },
+                  { title: "Friday", value: "friday" },
+                  { title: "Saturday", value: "saturday" },
+                  { title: "Sunday", value: "sunday" },
+                ],
+              },
+              validation: (r) => r.required(),
+            }),
+            defineField({
+              name: "open",
+              title: "Open",
+              type: "string",
+              description: 'HH:mm (e.g. "09:00")',
+              validation: (r) =>
+                r.required().regex(/^\d{2}:\d{2}$/, { name: "time" }),
+            }),
+            defineField({
+              name: "close",
+              title: "Close",
+              type: "string",
+              description: 'HH:mm (e.g. "17:00")',
+              validation: (r) =>
+                r.required().regex(/^\d{2}:\d{2}$/, { name: "time" }),
+            }),
+          ],
+          preview: {
+            select: { day: "day", open: "open", close: "close" },
+            prepare({ day, open, close }) {
+              return {
+                title: (day ?? "?").charAt(0).toUpperCase() + (day ?? "").slice(1),
+                subtitle: `${open ?? "?"} – ${close ?? "?"}`,
+              };
+            },
+          },
+        },
+      ],
+    }),
+    defineField({
+      name: "bookingSlotDuration",
+      title: "Slot Duration (minutes)",
+      type: "number",
+      group: "booking",
+      description: "Length of each bookable time slot.",
+      initialValue: 60,
+      validation: (r) => r.min(15).max(480),
+    }),
+    defineField({
+      name: "bookingMaxPerSlot",
+      title: "Max Bookings Per Slot",
+      type: "number",
+      group: "booking",
+      description: "How many bookings each time slot can accept.",
+      initialValue: 1,
+      validation: (r) => r.min(1),
+    }),
+    defineField({
+      name: "bookingAdvanceDays",
+      title: "Advance Booking Window (days)",
+      type: "number",
+      group: "booking",
+      description: "How far ahead customers can book.",
+      initialValue: 30,
+      validation: (r) => r.min(1).max(365),
+    }),
   ],
   preview: {
     prepare() {

@@ -19,7 +19,7 @@ export const bookingType = defineType({
       title: "Availability Slot",
       type: "reference",
       to: [{ type: "availabilitySlot" }],
-      validation: (r) => r.required(),
+      description: "Optional — omitted for general enquiry bookings.",
     }),
     defineField({
       name: "customerName",

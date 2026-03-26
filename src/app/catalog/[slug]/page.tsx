@@ -4,8 +4,8 @@ import { client } from "@/sanity/client";
 import {
   ITEM_BY_SLUG_QUERY,
   ITEM_SLUGS_QUERY,
-  AVAILABLE_SLOTS_QUERY,
   BOOKING_SETTINGS_QUERY,
+  BOOKINGS_FOR_ITEM_QUERY,
 } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
 import { getPlaceholderImage } from "@/sanity/getPlaceholderImage";
@@ -13,8 +13,8 @@ import { PortableTextBody } from "@/components/ui/PortableTextBody";
 import Image from "next/image";
 import Link from "next/link";
 import { BookingForm } from "@/components/ui/BookingForm";
-import type { AvailableSlot } from "@/components/ui/BookingForm";
-import { Package, ExternalLink } from "lucide-react";
+import type { BookingSettings, ExistingBooking } from "@/components/ui/BookingForm";
+import { ExternalLink, MessageSquare } from "lucide-react";
 import styles from "./page.module.scss";
 
 export const revalidate = 30;
@@ -93,22 +93,42 @@ export default async function CatalogItemPage({ params }: Props) {
   const coverImage = item.image ?? (await getPlaceholderImage());
 
   // Booking data (only for bookable items)
-  let availableSlots: AvailableSlot[] = [];
-  let bookingConfirmationMessage: string | undefined;
+  let bookingSettings: BookingSettings | null = null;
+  let existingBookings: ExistingBooking[] = [];
   if (item.bookable) {
-    const today = new Date().toISOString().slice(0, 10);
-    const [slots, settings] = await Promise.all([
-      client.fetch<AvailableSlot[]>(AVAILABLE_SLOTS_QUERY, {
-        itemId: item._id,
-        today,
-      }),
-      client.fetch<{ bookingConfirmationMessage?: string } | null>(
-        BOOKING_SETTINGS_QUERY,
-      ),
-    ]);
-    availableSlots = slots ?? [];
-    bookingConfirmationMessage =
-      settings?.bookingConfirmationMessage ?? undefined;
+    const today = new Date();
+    const fromDate = today.toISOString().slice(0, 10);
+    const rawSettings = await client.fetch<{
+      bookingConfirmationMessage?: string;
+      bookingOpeningHours?: { day: string; open: string; close: string }[];
+      bookingSlotDuration?: number;
+      bookingMaxPerSlot?: number;
+      bookingAdvanceDays?: number;
+    } | null>(BOOKING_SETTINGS_QUERY);
+
+    const advanceDays = rawSettings?.bookingAdvanceDays ?? 30;
+    const toDate = new Date(today);
+    toDate.setDate(toDate.getDate() + advanceDays);
+
+    // Default opening hours: Mon–Fri 09:00–17:00
+    const defaultHours = ["monday", "tuesday", "wednesday", "thursday", "friday"].map(
+      (day) => ({ day, open: "09:00", close: "17:00" }),
+    );
+
+    bookingSettings = {
+      openingHours: rawSettings?.bookingOpeningHours?.length
+        ? rawSettings.bookingOpeningHours
+        : defaultHours,
+      slotDuration: rawSettings?.bookingSlotDuration ?? 60,
+      maxPerSlot: rawSettings?.bookingMaxPerSlot ?? 1,
+      advanceDays,
+      confirmationMessage: rawSettings?.bookingConfirmationMessage,
+    };
+
+    existingBookings = await client.fetch<ExistingBooking[]>(
+      BOOKINGS_FOR_ITEM_QUERY,
+      { itemId: item._id, fromDate, toDate: toDate.toISOString().slice(0, 10) },
+    ) ?? [];
   }
 
   return (
@@ -293,13 +313,19 @@ export default async function CatalogItemPage({ params }: Props) {
           )}
 
           {/* Booking */}
-          {item.bookable && availableSlots.length > 0 && (
-            <BookingForm
-              itemId={item._id}
-              itemTitle={item.title}
-              availableSlots={availableSlots}
-              confirmationMessage={bookingConfirmationMessage}
-            />
+          {item.bookable && bookingSettings && (
+            <>
+              <BookingForm
+                itemId={item._id}
+                itemTitle={item.title}
+                settings={bookingSettings}
+                existingBookings={existingBookings}
+              />
+              <a href="/contact" className={styles.enquireLink}>
+                <MessageSquare size={14} />
+                Or send us an enquiry
+              </a>
+            </>
           )}
         </aside>
       </div>
