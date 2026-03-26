@@ -3,6 +3,7 @@ import { coreSchemas } from "./modules/core";
 import { eventsSchemas } from "./modules/events";
 import { faqSchemas } from "./modules/faq";
 import { catalogSchemas } from "./modules/catalog";
+import { bookingSchemas } from "./modules/booking";
 
 /**
  * Module registry — toggle per client.
@@ -12,10 +13,11 @@ const MODULE_SCHEMAS: Record<string, SchemaTypeDefinition[]> = {
   events: eventsSchemas,
   faq: faqSchemas,
   catalog: catalogSchemas,
+  booking: bookingSchemas,
 };
 
 /** Which optional modules are enabled for this project */
-const ENABLED_MODULES: string[] = ["events", "faq", "catalog"];
+const ENABLED_MODULES: string[] = ["events", "faq", "catalog", "booking"];
 
 function buildSchema(
   enabledModules: string[],

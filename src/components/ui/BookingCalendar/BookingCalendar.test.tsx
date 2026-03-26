@@ -1,0 +1,2 @@
+// BookingCalendar tests — stub
+export {};

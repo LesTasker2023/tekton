@@ -228,6 +228,7 @@ export const ITEM_BY_SLUG_QUERY = groq`
     variants[] { label, sku, price, inStock },
     location,
     externalUrl,
+    bookable,
     seo,
     body
   }
@@ -244,6 +245,31 @@ export const ITEM_CATEGORIES_QUERY = groq`
     slug,
     description,
     image ${imageProjection}
+  }
+`;
+
+/* ─── Booking ─── */
+export const AVAILABLE_SLOTS_QUERY = groq`
+  *[_type == "availabilitySlot"
+    && item._ref == $itemId
+    && date >= $today
+    && booked < capacity
+  ] | order(date asc, startTime asc) {
+    _id,
+    _rev,
+    date,
+    startTime,
+    endTime,
+    capacity,
+    booked
+  }
+`;
+
+export const BOOKING_SETTINGS_QUERY = groq`
+  *[_type == "siteSettings"][0] {
+    bookingAdminEmail,
+    bookingEmailFromName,
+    bookingConfirmationMessage
   }
 `;
 

@@ -75,6 +75,14 @@ export const itemType = defineType({
       initialValue: false,
     }),
     defineField({
+      name: "bookable",
+      title: "Bookable",
+      type: "boolean",
+      group: "details",
+      description: "Enable booking form on this item's detail page.",
+      initialValue: false,
+    }),
+    defineField({
       name: "sortOrder",
       title: "Sort Order",
       type: "number",

@@ -1,0 +1,2 @@
+// BookingForm tests — stub
+export {};

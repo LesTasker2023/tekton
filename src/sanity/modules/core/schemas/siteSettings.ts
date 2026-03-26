@@ -13,6 +13,7 @@ export const siteSettingsType = defineType({
     { name: "analytics", title: "Analytics" },
     { name: "seo", title: "SEO Defaults" },
     { name: "social", title: "Social Links" },
+    { name: "booking", title: "Booking" },
   ],
   fields: [
     /* ── General ── */
@@ -227,6 +228,30 @@ export const siteSettingsType = defineType({
           },
         },
       ],
+    }),
+
+    /* ── Booking ── */
+    defineField({
+      name: "bookingAdminEmail",
+      title: "Admin Notification Email",
+      type: "string",
+      group: "booking",
+      description: "Where booking notifications are sent.",
+    }),
+    defineField({
+      name: "bookingEmailFromName",
+      title: "Email Sender Name",
+      type: "string",
+      group: "booking",
+      description: "Display name for booking notification emails.",
+    }),
+    defineField({
+      name: "bookingConfirmationMessage",
+      title: "Confirmation Message",
+      type: "text",
+      rows: 3,
+      group: "booking",
+      description: "Shown to the customer after a successful booking.",
     }),
   ],
   preview: {

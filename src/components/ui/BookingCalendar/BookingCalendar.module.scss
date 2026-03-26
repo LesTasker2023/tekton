@@ -1,0 +1,109 @@
+/* ============================================================================
+   BookingCalendar — date picker for booking availability
+   ============================================================================ */
+
+.calendar {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.navBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.navBtn:hover {
+  color: var(--color-primary);
+  border-color: rgba(var(--color-primary-rgb), 0.3);
+}
+
+.monthLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.dayHeaders {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  margin-bottom: var(--space-1);
+}
+
+.dayLabel {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--text-muted);
+  text-align: center;
+  letter-spacing: 0.06em;
+}
+
+.week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: default;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+/* Past dates */
+.cell[data-past="true"] {
+  opacity: 0.3;
+}
+
+/* Available dates */
+.cell[data-available="true"] {
+  color: var(--text-primary);
+  cursor: pointer;
+  background: rgba(var(--color-primary-rgb), 0.06);
+  border-color: rgba(var(--color-primary-rgb), 0.15);
+}
+
+.cell[data-available="true"]:hover {
+  background: rgba(var(--color-primary-rgb), 0.15);
+  border-color: rgba(var(--color-primary-rgb), 0.3);
+}
+
+/* Selected date */
+.cell[data-selected="true"] {
+  background: var(--color-primary);
+  color: var(--bg-base);
+  border-color: var(--color-primary);
+  font-weight: 700;
+}
+
+/* Today indicator */
+.cell[data-today="true"]:not([data-selected="true"]) {
+  border-color: var(--border-default);
+}

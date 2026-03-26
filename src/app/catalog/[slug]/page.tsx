@@ -1,16 +1,23 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { client } from "@/sanity/client";
-import { ITEM_BY_SLUG_QUERY, ITEM_SLUGS_QUERY } from "@/sanity/queries";
+import {
+  ITEM_BY_SLUG_QUERY,
+  ITEM_SLUGS_QUERY,
+  AVAILABLE_SLOTS_QUERY,
+  BOOKING_SETTINGS_QUERY,
+} from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
 import { getPlaceholderImage } from "@/sanity/getPlaceholderImage";
 import { PortableTextBody } from "@/components/ui/PortableTextBody";
 import Image from "next/image";
 import Link from "next/link";
+import { BookingForm } from "@/components/ui/BookingForm";
+import type { AvailableSlot } from "@/components/ui/BookingForm";
 import { Package, ExternalLink } from "lucide-react";
 import styles from "./page.module.scss";
 
-export const revalidate = 60;
+export const revalidate = 30;
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -84,6 +91,25 @@ export default async function CatalogItemPage({ params }: Props) {
   if (!item) notFound();
 
   const coverImage = item.image ?? (await getPlaceholderImage());
+
+  // Booking data (only for bookable items)
+  let availableSlots: AvailableSlot[] = [];
+  let bookingConfirmationMessage: string | undefined;
+  if (item.bookable) {
+    const today = new Date().toISOString().slice(0, 10);
+    const [slots, settings] = await Promise.all([
+      client.fetch<AvailableSlot[]>(AVAILABLE_SLOTS_QUERY, {
+        itemId: item._id,
+        today,
+      }),
+      client.fetch<{ bookingConfirmationMessage?: string } | null>(
+        BOOKING_SETTINGS_QUERY,
+      ),
+    ]);
+    availableSlots = slots ?? [];
+    bookingConfirmationMessage =
+      settings?.bookingConfirmationMessage ?? undefined;
+  }
 
   return (
     <article className={styles.article}>
@@ -264,6 +290,16 @@ export default async function CatalogItemPage({ params }: Props) {
           {/* Status */}
           {item.status && (
             <span className={styles.statusBadge}>{item.status}</span>
+          )}
+
+          {/* Booking */}
+          {item.bookable && availableSlots.length > 0 && (
+            <BookingForm
+              itemId={item._id}
+              itemTitle={item.title}
+              availableSlots={availableSlots}
+              confirmationMessage={bookingConfirmationMessage}
+            />
           )}
         </aside>
       </div>

@@ -18,32 +18,15 @@
 }
 
 .title {
-  font-family: var(--font-mono);
   font-size: clamp(1.8rem, 4vw, 2.5rem);
   font-weight: 800;
   color: var(--text-primary);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   margin: 0 0 var(--space-2);
 }
 
-.title::before {
-  content: "[";
-  color: var(--color-primary);
-  opacity: 0.5;
-}
-
-.title::after {
-  content: "]";
-  color: var(--color-primary);
-  opacity: 0.5;
-}
-
 .subtitle {
-  font-family: var(--font-mono);
   font-size: var(--text-sm);
   color: var(--text-muted);
-  letter-spacing: 0.04em;
   margin: 0;
 }
 
@@ -78,7 +61,6 @@
 .search {
   width: 100%;
   padding: var(--space-2) var(--space-3) var(--space-2) var(--space-8);
-  font-family: var(--font-mono);
   font-size: var(--text-sm);
   color: var(--text-primary);
   background: var(--bg-surface);
@@ -103,7 +85,6 @@
 }
 
 .select {
-  font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--text-secondary);
   background: var(--bg-surface);
@@ -129,13 +110,11 @@
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  font-family: var(--font-mono);
   font-size: var(--text-xs);
 }
 
 .resultCount {
   color: var(--text-secondary);
-  letter-spacing: 0.04em;
 }
 
 .resultCount strong {
@@ -144,11 +123,8 @@
 
 .clearBtn {
   margin-left: auto;
-  font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
   cursor: pointer;
   background: none;
   border: 1px solid var(--border-subtle);
@@ -245,12 +221,9 @@
 }
 
 .featuredTitle {
-  font-family: var(--font-mono);
   font-size: clamp(1.3rem, 2.5vw, 1.75rem);
   font-weight: 700;
   color: var(--text-primary);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
   line-height: 1.25;
   margin: 0;
 }
@@ -286,7 +259,6 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .badge {
-  font-family: var(--font-mono);
   font-size: 0.6rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -374,7 +346,6 @@
   border-radius: 50%;
   background: rgba(var(--color-primary-rgb), 0.9);
   color: var(--text-on-accent);
-  box-shadow: 0 0 8px rgba(var(--color-primary-rgb), 0.4);
 }
 
 .cardImagePlaceholder {
@@ -407,7 +378,6 @@
 }
 
 .tag {
-  font-family: var(--font-mono);
   font-size: 0.6rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -418,13 +388,10 @@
 }
 
 .cardTitle {
-  font-family: var(--font-mono);
   font-size: var(--text-base);
   font-weight: 600;
   color: var(--text-primary);
   line-height: 1.35;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
   margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -475,7 +442,6 @@
 }
 
 .statusBadge {
-  font-family: var(--font-mono);
   font-size: 0.6rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -505,12 +471,9 @@
 }
 
 .emptyTitle {
-  font-family: var(--font-mono);
   font-size: var(--text-xl);
   font-weight: 700;
   color: var(--text-primary);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
   margin: 0;
 }
 
@@ -521,7 +484,6 @@
 }
 
 .studioLink {
-  font-family: var(--font-mono);
   font-size: var(--text-sm);
   color: var(--color-primary);
   text-decoration: underline;
@@ -541,7 +503,6 @@
   padding: var(--space-12) var(--space-8);
   text-align: center;
   color: var(--text-muted);
-  font-family: var(--font-mono);
   font-size: var(--text-sm);
 }
 
@@ -563,4 +524,95 @@
   .filters {
     flex-direction: column;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HUD Skin Overrides
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:global([data-skin="hud"]) .title {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+:global([data-skin="hud"]) .title::before {
+  content: "[";
+  color: var(--color-primary);
+  opacity: 0.5;
+}
+
+:global([data-skin="hud"]) .title::after {
+  content: "]";
+  color: var(--color-primary);
+  opacity: 0.5;
+}
+
+:global([data-skin="hud"]) .subtitle {
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+}
+
+:global([data-skin="hud"]) .search {
+  font-family: var(--font-mono);
+}
+
+:global([data-skin="hud"]) .select {
+  font-family: var(--font-mono);
+}
+
+:global([data-skin="hud"]) .activeFilters {
+  font-family: var(--font-mono);
+}
+
+:global([data-skin="hud"]) .resultCount {
+  letter-spacing: 0.04em;
+}
+
+:global([data-skin="hud"]) .clearBtn {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+:global([data-skin="hud"]) .featuredTitle {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+:global([data-skin="hud"]) .badge {
+  font-family: var(--font-mono);
+}
+
+:global([data-skin="hud"]) .starBadge {
+  box-shadow: 0 0 8px rgba(var(--color-primary-rgb), 0.4);
+}
+
+:global([data-skin="hud"]) .tag {
+  font-family: var(--font-mono);
+}
+
+:global([data-skin="hud"]) .cardTitle {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+:global([data-skin="hud"]) .statusBadge {
+  font-family: var(--font-mono);
+}
+
+:global([data-skin="hud"]) .emptyTitle {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+:global([data-skin="hud"]) .studioLink {
+  font-family: var(--font-mono);
+}
+
+:global([data-skin="hud"]) .noResults {
+  font-family: var(--font-mono);
 }

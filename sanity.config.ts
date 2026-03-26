@@ -20,6 +20,8 @@ import {
   HelpCircle,
   Home,
   Package,
+  Clock,
+  CalendarCheck,
 } from "lucide-react";
 import "./src/sanity/studio.css";
 
@@ -105,6 +107,24 @@ const structure: StructureResolver = (S) =>
                   S.documentTypeList("itemCategory")
                     .title("Item Categories")
                     .defaultOrdering([{ field: "sortOrder", direction: "asc" }]),
+                ),
+              S.listItem()
+                .title("Availability Slots")
+                .id("availabilitySlots")
+                .icon(Clock)
+                .child(
+                  S.documentTypeList("availabilitySlot")
+                    .title("Availability Slots")
+                    .defaultOrdering([{ field: "date", direction: "asc" }]),
+                ),
+              S.listItem()
+                .title("Bookings")
+                .id("bookings")
+                .icon(CalendarCheck)
+                .child(
+                  S.documentTypeList("booking")
+                    .title("Bookings")
+                    .defaultOrdering([{ field: "createdAt", direction: "desc" }]),
                 ),
             ]),
         ),

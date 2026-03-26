@@ -18,32 +18,15 @@
 }
 
 .title {
-  font-family: var(--font-mono);
   font-size: clamp(1.8rem, 4vw, 2.5rem);
   font-weight: 800;
   color: var(--text-primary);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   margin: 0 0 var(--space-2);
 }
 
-.title::before {
-  content: "[";
-  color: var(--color-primary);
-  opacity: 0.5;
-}
-
-.title::after {
-  content: "]";
-  color: var(--color-primary);
-  opacity: 0.5;
-}
-
 .subtitle {
-  font-family: var(--font-mono);
   font-size: var(--text-sm);
   color: var(--text-muted);
-  letter-spacing: 0.04em;
   margin: 0;
 }
 
@@ -79,11 +62,8 @@
 
 .viewBtn {
   padding: var(--space-1) var(--space-3);
-  font-family: var(--font-mono);
   font-size: 0.6rem;
   font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   background: transparent;
   border: none;
   color: var(--text-muted);
@@ -111,13 +91,11 @@
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  font-family: var(--font-mono);
   font-size: var(--text-xs);
 }
 
 .resultCount {
   color: var(--text-secondary);
-  letter-spacing: 0.04em;
 }
 
 .resultCount strong {
@@ -126,11 +104,8 @@
 
 .clearBtn {
   margin-left: auto;
-  font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
   cursor: pointer;
   background: none;
   border: 1px solid var(--border-subtle);
@@ -195,10 +170,9 @@
   transform: scale(1.05);
 }
 
-/* Live event card glow */
+/* Live event card */
 .cardLive {
   border-color: rgba(var(--color-primary-rgb), 0.4);
-  box-shadow: 0 0 20px rgba(var(--color-primary-rgb), 0.08);
 }
 
 /* Past event — slightly dimmed */
@@ -251,12 +225,8 @@
   border-radius: var(--radius-sm);
   background: rgba(var(--color-primary-rgb), 0.9);
   color: var(--text-on-accent);
-  font-family: var(--font-mono);
   font-size: 0.55rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  box-shadow: 0 0 12px rgba(var(--color-primary-rgb), 0.4);
 }
 
 .liveDot {
@@ -293,13 +263,10 @@
 }
 
 .cardTitle {
-  font-family: var(--font-mono);
   font-size: var(--text-base);
   font-weight: 600;
   color: var(--text-primary);
   line-height: 1.35;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
   margin: 0;
 }
 
@@ -319,10 +286,8 @@
   flex-wrap: wrap;
   gap: var(--space-3);
   align-items: center;
-  font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--text-muted);
-  letter-spacing: 0.04em;
   margin-top: auto;
   padding-top: var(--space-3);
   border-top: 1px solid var(--border-subtle);
@@ -358,12 +323,9 @@
 }
 
 .emptyTitle {
-  font-family: var(--font-mono);
   font-size: var(--text-xl);
   font-weight: 700;
   color: var(--text-primary);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
   margin: 0;
 }
 
@@ -374,7 +336,6 @@
 }
 
 .studioLink {
-  font-family: var(--font-mono);
   font-size: var(--text-sm);
   color: var(--color-primary);
   text-decoration: underline;
@@ -394,7 +355,6 @@
   padding: var(--space-12) var(--space-8);
   text-align: center;
   color: var(--text-muted);
-  font-family: var(--font-mono);
   font-size: var(--text-sm);
 }
 
@@ -430,4 +390,87 @@
   .grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HUD Skin Overrides
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:global([data-skin="hud"]) .title {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+:global([data-skin="hud"]) .title::before {
+  content: "[";
+  color: var(--color-primary);
+  opacity: 0.5;
+}
+
+:global([data-skin="hud"]) .title::after {
+  content: "]";
+  color: var(--color-primary);
+  opacity: 0.5;
+}
+
+:global([data-skin="hud"]) .subtitle {
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+}
+
+:global([data-skin="hud"]) .viewBtn {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+:global([data-skin="hud"]) .activeFilters {
+  font-family: var(--font-mono);
+}
+
+:global([data-skin="hud"]) .resultCount {
+  letter-spacing: 0.04em;
+}
+
+:global([data-skin="hud"]) .clearBtn {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+:global([data-skin="hud"]) .cardLive {
+  box-shadow: 0 0 20px rgba(var(--color-primary-rgb), 0.08);
+}
+
+:global([data-skin="hud"]) .liveBadge {
+  font-family: var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  box-shadow: 0 0 12px rgba(var(--color-primary-rgb), 0.4);
+}
+
+:global([data-skin="hud"]) .cardTitle {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+:global([data-skin="hud"]) .cardMeta {
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+}
+
+:global([data-skin="hud"]) .emptyTitle {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+:global([data-skin="hud"]) .studioLink {
+  font-family: var(--font-mono);
+}
+
+:global([data-skin="hud"]) .noResults {
+  font-family: var(--font-mono);
 }

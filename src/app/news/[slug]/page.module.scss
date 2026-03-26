@@ -13,11 +13,9 @@
 .back {
   display: inline-block;
   padding: var(--space-6) var(--space-8);
-  font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--text-muted);
   text-decoration: none;
-  letter-spacing: 0.04em;
   transition: color var(--duration-fast) var(--ease-out);
 }
 
@@ -72,7 +70,6 @@
 }
 
 .tag {
-  font-family: var(--font-mono);
   font-size: 0.6rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -84,13 +81,10 @@
 }
 
 .title {
-  font-family: var(--font-mono);
   font-size: clamp(1.6rem, 5vw, var(--text-3xl));
   font-weight: 700;
   color: #fff;
-  letter-spacing: 0.02em;
   line-height: 1.2;
-  text-transform: uppercase;
   max-width: 48rem;
 }
 
@@ -127,13 +121,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-weight: 700;
 }
 
 .authorName {
-  font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-weight: 600;
   color: var(--text-primary);
@@ -143,7 +135,6 @@
 .metaRow {
   display: flex;
   gap: var(--space-3);
-  font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--text-muted);
 }
@@ -157,7 +148,7 @@
 }
 
 .readTime::before {
-  content: "·";
+  content: "\00b7";
   margin-right: var(--space-1);
 }
 
@@ -185,7 +176,6 @@
 }
 
 .footerTag {
-  font-family: var(--font-mono);
   font-size: 0.6rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -196,11 +186,9 @@
 }
 
 .backLink {
-  font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--color-primary);
   text-decoration: none;
-  letter-spacing: 0.04em;
   transition: opacity var(--duration-fast) var(--ease-out);
 }
 
@@ -234,4 +222,44 @@
   .footer {
     padding: var(--space-4);
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HUD Skin Overrides
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:global([data-skin="hud"]) .back {
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+}
+
+:global([data-skin="hud"]) .tag {
+  font-family: var(--font-mono);
+}
+
+:global([data-skin="hud"]) .title {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+:global([data-skin="hud"]) .authorAvatar {
+  font-family: var(--font-mono);
+}
+
+:global([data-skin="hud"]) .authorName {
+  font-family: var(--font-mono);
+}
+
+:global([data-skin="hud"]) .metaRow {
+  font-family: var(--font-mono);
+}
+
+:global([data-skin="hud"]) .footerTag {
+  font-family: var(--font-mono);
+}
+
+:global([data-skin="hud"]) .backLink {
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
 }

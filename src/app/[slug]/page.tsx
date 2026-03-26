@@ -5,7 +5,7 @@ import { PAGE_BY_SLUG_QUERY, PAGE_SLUGS_QUERY } from "@/sanity/queries";
 import { SectionRenderer } from "@/components/composed";
 import styles from "./page.module.scss";
 
-export const revalidate = 60;
+export const revalidate = 30;
 
 /* ── Known app routes that must NOT be caught by this dynamic segment ── */
 const RESERVED_SLUGS = new Set(["news", "guides", "studio"]);

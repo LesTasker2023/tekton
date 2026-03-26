@@ -10,7 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.scss";
 
-export const revalidate = 60;
+export const revalidate = 30;
 
 interface Props {
   params: Promise<{ slug: string }>;

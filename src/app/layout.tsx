@@ -33,7 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const settings = await getClient(false).fetch(
     SITE_SETTINGS_QUERY,
     {},
-    { next: { revalidate: 300 } },
+    { next: { revalidate: 30 } },
   );
 
   const siteName = settings?.siteName ?? "Tekton";
@@ -134,7 +134,7 @@ export default async function RootLayout({
     const settings = await getClient(false).fetch(
       SITE_SETTINGS_QUERY,
       {},
-      { next: { revalidate: 300 } },
+      { next: { revalidate: 30 } },
     );
     defaultHue = settings?.defaultThemeHue;
     defaultMode = settings?.defaultThemeMode;
