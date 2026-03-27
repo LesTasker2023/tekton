@@ -17,6 +17,7 @@ import { codeBlockType } from "@/sanity/objects/codeBlock";
 import { calloutType } from "@/sanity/objects/callout";
 import { imageWithAltType } from "@/sanity/objects/imageWithAlt";
 import { videoEmbedType } from "@/sanity/objects/videoEmbed";
+import { objectShowcaseType } from "@/sanity/objects/objectShowcase";
 import { ctaLinkType } from "@/sanity/objects/ctaLink";
 import { seoFieldsType } from "@/sanity/objects/seoFields";
 
@@ -46,6 +47,7 @@ export const coreSchemas: SchemaTypeDefinition[] = [
   calloutType,
   imageWithAltType,
   videoEmbedType,
+  objectShowcaseType,
   ctaLinkType,
   seoFieldsType,
   // Page Builder sections

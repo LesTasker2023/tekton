@@ -29,6 +29,18 @@ interface VideoEmbedValue {
   caption?: string;
 }
 
+interface ShowcaseItemValue {
+  _key?: string;
+  image?: { asset?: { _ref: string } };
+  label: string;
+  description?: string;
+}
+
+interface ObjectShowcaseValue {
+  title?: string;
+  items?: ShowcaseItemValue[];
+}
+
 function toEmbedUrl(url?: string): string | null {
   if (!url) return null;
   // YouTube
@@ -138,8 +150,77 @@ const components: Partial<PortableTextReactComponents> = {
         </figure>
       );
     },
+    objectShowcase: ({ value }: { value: ObjectShowcaseValue }) => {
+      const items = value.items ?? [];
+      if (items.length === 0) return null;
+      return (
+        <div className={styles.showcase}>
+          {value.title && (
+            <h3 className={styles.showcaseTitle}>{value.title}</h3>
+          )}
+          <div
+            className={styles.showcaseGrid}
+            data-count={Math.min(items.length, 4)}
+          >
+            {items.map((item, i) => (
+              <figure key={item._key ?? i} className={styles.showcaseItem}>
+                {item.image?.asset && (
+                  <Image
+                    src={urlFor(item.image).width(400).height(400).auto("format").url()}
+                    alt={item.label}
+                    width={400}
+                    height={400}
+                    className={styles.showcaseImage}
+                  />
+                )}
+                <figcaption className={styles.showcaseCaption}>
+                  <span className={styles.showcaseLabel}>{item.label}</span>
+                  {item.description && (
+                    <span className={styles.showcaseDesc}>{item.description}</span>
+                  )}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      );
+    },
   },
 };
+
+/**
+ * Split a Portable Text array into sections at H2 boundaries.
+ * Content before the first H2 is returned as a section with no heading.
+ */
+function splitByH2(
+  blocks: PortableTextBlock[],
+): { heading: PortableTextBlock | null; content: PortableTextBlock[] }[] {
+  const sections: { heading: PortableTextBlock | null; content: PortableTextBlock[] }[] = [];
+  let current: { heading: PortableTextBlock | null; content: PortableTextBlock[] } = {
+    heading: null,
+    content: [],
+  };
+
+  for (const block of blocks) {
+    const isH2 =
+      block._type === "block" && (block as { style?: string }).style === "h2";
+
+    if (isH2) {
+      if (current.heading || current.content.length > 0) {
+        sections.push(current);
+      }
+      current = { heading: block, content: [] };
+    } else {
+      current.content.push(block);
+    }
+  }
+
+  if (current.heading || current.content.length > 0) {
+    sections.push(current);
+  }
+
+  return sections;
+}
 
 interface Props {
   value: PortableTextBlock[];
@@ -147,9 +228,46 @@ interface Props {
 
 export function PortableTextBody({ value }: Props) {
   if (!value) return null;
+
+  const sections = splitByH2(value);
+  const hasAnySections = sections.some((s) => s.heading !== null);
+
+  // No H2s at all — render flat, no wrappers
+  if (!hasAnySections) {
+    return (
+      <div className={styles.body} data-component="portable-text">
+        <PortableText value={value} components={components} />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.body} data-component="portable-text">
-      <PortableText value={value} components={components} />
+      {sections.map((section, i) => {
+        // Content before the first H2 — render unwrapped
+        if (!section.heading) {
+          return (
+            <PortableText
+              key={`preamble-${i}`}
+              value={section.content}
+              components={components}
+            />
+          );
+        }
+
+        // Sectioned content
+        return (
+          <section
+            key={section.heading._key ?? `section-${i}`}
+            className={styles.section}
+          >
+            <PortableText
+              value={[section.heading, ...section.content]}
+              components={components}
+            />
+          </section>
+        );
+      })}
     </div>
   );
 }
