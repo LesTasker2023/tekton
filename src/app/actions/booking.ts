@@ -48,30 +48,32 @@ export async function submitBooking(
     message,
   } = parsed.data;
 
-  // Check capacity — count existing non-cancelled bookings for this slot
-  const settings = await writeClient.fetch<{
-    bookingAdminEmail?: string;
-    bookingEmailFromName?: string;
-    bookingMaxPerSlot?: number;
-  } | null>(
-    `*[_type == "siteSettings"][0] { bookingAdminEmail, bookingEmailFromName, bookingMaxPerSlot }`,
-  );
+  let settings: { bookingAdminEmail?: string; bookingEmailFromName?: string; bookingMaxPerSlot?: number } | null = null;
+
+  try {
+    settings = await writeClient.fetch(
+      `*[_type == "siteSettings"][0] { bookingAdminEmail, bookingEmailFromName, bookingMaxPerSlot }`,
+    );
+  } catch (e) {
+    console.error("[submitBooking] failed to fetch settings:", e);
+    return { success: false, message: "Configuration error. Please contact us directly." };
+  }
 
   const maxPerSlot = settings?.bookingMaxPerSlot ?? 1;
 
-  const existingCount = await writeClient.fetch<number>(
-    `count(*[_type == "booking" && item._ref == $itemId && date == $date && timeSlot == $timeSlot && status != "cancelled"])`,
-    { itemId, date, timeSlot },
-  );
+  try {
+    const existingCount = await writeClient.fetch<number>(
+      `count(*[_type == "booking" && item._ref == $itemId && date == $date && timeSlot == $timeSlot && status != "cancelled"])`,
+      { itemId, date, timeSlot },
+    );
 
-  if (existingCount >= maxPerSlot) {
-    return {
-      success: false,
-      message: "This slot has just been booked. Please choose another time.",
-    };
+    if (existingCount >= maxPerSlot) {
+      return { success: false, message: "This slot has just been booked. Please choose another time." };
+    }
+  } catch (e) {
+    console.error("[submitBooking] capacity check failed:", e);
+    // Non-fatal — proceed with booking if we can't check capacity
   }
-
-  const now = new Date().toISOString();
 
   try {
     await writeClient.create({
@@ -84,10 +86,11 @@ export async function submitBooking(
       timeSlot,
       message: message || undefined,
       status: "pending",
-      createdAt: now,
+      createdAt: new Date().toISOString(),
     });
-  } catch {
-    return { success: false, message: "Something went wrong. Please try again." };
+  } catch (e) {
+    console.error("[submitBooking] create failed:", e);
+    return { success: false, message: "Something went wrong saving your booking. Please try again." };
   }
 
   // Fire-and-forget email notification
