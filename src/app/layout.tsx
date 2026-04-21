@@ -27,7 +27,8 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com";
+const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com";
+const SITE_URL = rawSiteUrl.startsWith("http") ? rawSiteUrl : `https://${rawSiteUrl}`;
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getClient(false).fetch(
