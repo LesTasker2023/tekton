@@ -249,6 +249,19 @@ export const ITEM_CATEGORIES_QUERY = groq`
 `;
 
 /* ─── Booking ─── */
+export const BOOKABLE_ITEMS_QUERY = groq`
+  *[_type == "item" && status == "active" && bookable == true] | order(sortOrder asc) {
+    _id,
+    title,
+    slug,
+    excerpt,
+    price,
+    currency,
+    image ${imageProjection},
+    categories[]->{ _id, title, slug }
+  }
+`;
+
 export const BOOKING_SETTINGS_QUERY = groq`
   *[_type == "siteSettings"][0] {
     bookingAdminEmail,
