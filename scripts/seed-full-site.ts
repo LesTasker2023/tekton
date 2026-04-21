@@ -2,14 +2,26 @@
  * Full site seed — populates Sanity with a complete set of pages, news & guides.
  *
  * Usage:
- *   SANITY_API_TOKEN=<write-token> npx tsx scripts/seed-full-site.ts
+ *   yarn seed
+ *
+ * Note: Reads SANITY_API_TOKEN from .env.local automatically.
  */
 
+import { config } from "dotenv";
 import { createClient } from "@sanity/client";
 
-const projectId = "u2kuytve";
-const dataset = "production";
-const token = process.env.SANITY_TOKEN || process.env.SANITY_API_TOKEN;
+// Load .env.local (same as Next.js does)
+config({ path: ".env.local" });
+
+const projectId =
+  process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ||
+  process.env.SANITY_PROJECT_ID ||
+  "production";
+const dataset =
+  process.env.NEXT_PUBLIC_SANITY_DATASET ||
+  process.env.SANITY_DATASET ||
+  "production";
+const token = process.env.SANITY_API_TOKEN || process.env.SANITY_TOKEN;
 
 if (!token) {
   console.error(
@@ -150,10 +162,7 @@ function richBody(topic: string) {
     h2(`Lorem ${topic}`),
     p(L.med),
     p(L.para2),
-    callout(
-      "info",
-      `Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
-    ),
+    callout("info", `Lorem ipsum dolor sit amet, consectetur adipiscing elit.`),
     h3("Dolor Sit Amet"),
     bullet("Lorem ipsum dolor sit amet, consectetur adipiscing elit"),
     bullet("Ut enim ad minim veniam, quis nostrud exercitation"),
@@ -301,8 +310,7 @@ async function main() {
       _type: "category",
       title: "Categoria Alpha",
       slug: { _type: "slug", current: "tutorials" },
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     },
     {
       _id: "cat-development",
@@ -317,8 +325,7 @@ async function main() {
       _type: "category",
       title: "Categoria Gamma",
       slug: { _type: "slug", current: "design" },
-      description:
-        "Duis aute irure dolor in reprehenderit in voluptate velit.",
+      description: "Duis aute irure dolor in reprehenderit in voluptate velit.",
     },
     {
       _id: "cat-deployment",
@@ -557,9 +564,7 @@ async function main() {
             p(L.para3),
             h3("Consectetur Adipiscing"),
             p(L.med),
-            bullet(
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-            ),
+            bullet("Lorem ipsum dolor sit amet, consectetur adipiscing elit"),
             bullet("Ut enim ad minim veniam, quis nostrud exercitation"),
             bullet("Duis aute irure dolor in reprehenderit in voluptate"),
             bullet("Excepteur sint occaecat cupidatat non proident"),
@@ -758,8 +763,7 @@ async function main() {
       _type: "page",
       title: "FAQ",
       slug: { _type: "slug", current: "faq" },
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       sections: [
         {
           _type: "pageHeroSection",
