@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -10,6 +10,7 @@ import {
   X,
   ChevronRight,
   ChevronLeft,
+  ChevronDown,
   Newspaper,
   BookOpen,
   CalendarDays,
@@ -27,6 +28,7 @@ interface NavItem {
   label: string;
   href: string;
   icon: React.ReactNode;
+  children?: NavItem[];
 }
 
 const DEFAULT_NAV: NavItem[] = [
@@ -57,6 +59,17 @@ export function NavShell({ children, settings = {}, logoUrl }: NavShellProps) {
 
   const { subTabs } = useTopBar();
 
+  const [openGroups, setOpenGroups] = useState<Set<string>>(new Set());
+
+  const toggleGroup = useCallback((label: string) => {
+    setOpenGroups((prev) => {
+      const next = new Set(prev);
+      if (next.has(label)) next.delete(label);
+      else next.add(label);
+      return next;
+    });
+  }, []);
+
   const navItems = useMemo<NavItem[]>(() => {
     const HIDDEN = ["/cms-guide"];
     if (!settings.mainNav?.length) return DEFAULT_NAV;
@@ -64,7 +77,24 @@ export function NavShell({ children, settings = {}, logoUrl }: NavShellProps) {
       .filter((link) => !HIDDEN.includes(link.href))
       .map((link) => {
         const Icon = link.icon ? dynamicIcon(link.icon) : dynamicIcon("box");
-        return { label: link.label, href: link.href, icon: <Icon size={20} /> };
+        const children = link.children?.length
+          ? link.children.map((child) => {
+              const ChildIcon = child.icon
+                ? dynamicIcon(child.icon)
+                : dynamicIcon("circle");
+              return {
+                label: child.label,
+                href: child.href,
+                icon: <ChildIcon size={16} />,
+              };
+            })
+          : undefined;
+        return {
+          label: link.label,
+          href: link.href,
+          icon: <Icon size={20} />,
+          children,
+        };
       });
   }, [settings.mainNav]);
 
@@ -115,9 +145,61 @@ export function NavShell({ children, settings = {}, logoUrl }: NavShellProps) {
           <nav className={styles.nav}>
             <div className={styles.navGroup}>
               {navItems.map((item) => {
+                const hasChildren = !!item.children?.length;
+                const isGroupOpen = openGroups.has(item.label);
+                const childActive = hasChildren && item.children!.some(
+                  (c) => pathname === c.href || pathname.startsWith(c.href + "/"),
+                );
                 const isActive =
-                  pathname === item.href ||
-                  pathname.startsWith(item.href + "/");
+                  !hasChildren &&
+                  (pathname === item.href ||
+                    pathname.startsWith(item.href + "/"));
+
+                if (hasChildren) {
+                  return (
+                    <div key={item.label} className={styles.navGroupNested}>
+                      <button
+                        className={styles.navItem}
+                        data-active={childActive}
+                        title={!expanded ? item.label : undefined}
+                        onClick={() => toggleGroup(item.label)}
+                      >
+                        {item.icon}
+                        <span className={styles.navLabel}>{item.label}</span>
+                        <ChevronDown
+                          size={12}
+                          className={styles.navGroupChevron}
+                          data-open={isGroupOpen}
+                        />
+                      </button>
+                      {isGroupOpen && (
+                        <div className={styles.navChildren}>
+                          {item.children!.map((child) => {
+                            const isChildActive =
+                              pathname === child.href ||
+                              pathname.startsWith(child.href + "/");
+                            return (
+                              <Link
+                                key={child.href}
+                                href={child.href}
+                                className={styles.navChild}
+                                data-active={isChildActive}
+                                title={!expanded ? child.label : undefined}
+                                onClick={() => setMobileOpen(false)}
+                              >
+                                {child.icon}
+                                <span className={styles.navLabel}>
+                                  {child.label}
+                                </span>
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+
                 return (
                   <Link
                     key={item.href}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -8,6 +8,7 @@ import { Analytics } from "@vercel/analytics/next";
 import {
   Menu,
   X,
+  ChevronDown,
   Newspaper,
   BookOpen,
   CalendarDays,
@@ -22,6 +23,7 @@ interface NavItem {
   label: string;
   href: string;
   icon: React.ReactNode;
+  children?: NavItem[];
 }
 
 const DEFAULT_NAV: NavItem[] = [
@@ -41,6 +43,17 @@ export function NavTopBar({ children, settings = {}, logoUrl }: NavTopBarProps) 
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const [openGroups, setOpenGroups] = useState<Set<string>>(new Set());
+
+  const toggleGroup = useCallback((label: string) => {
+    setOpenGroups((prev) => {
+      const next = new Set(prev);
+      if (next.has(label)) next.delete(label);
+      else next.add(label);
+      return next;
+    });
+  }, []);
+
   const navItems = useMemo<NavItem[]>(() => {
     const HIDDEN = ["/cms-guide"];
     if (!settings.mainNav?.length) return DEFAULT_NAV;
@@ -48,7 +61,24 @@ export function NavTopBar({ children, settings = {}, logoUrl }: NavTopBarProps) 
       .filter((link) => !HIDDEN.includes(link.href))
       .map((link) => {
         const Icon = link.icon ? dynamicIcon(link.icon) : dynamicIcon("box");
-        return { label: link.label, href: link.href, icon: <Icon size={18} /> };
+        const children = link.children?.length
+          ? link.children.map((child) => {
+              const ChildIcon = child.icon
+                ? dynamicIcon(child.icon)
+                : dynamicIcon("circle");
+              return {
+                label: child.label,
+                href: child.href,
+                icon: <ChildIcon size={16} />,
+              };
+            })
+          : undefined;
+        return {
+          label: link.label,
+          href: link.href,
+          icon: <Icon size={18} />,
+          children,
+        };
       });
   }, [settings.mainNav]);
 
@@ -81,9 +111,47 @@ export function NavTopBar({ children, settings = {}, logoUrl }: NavTopBarProps) 
             {/* Desktop nav */}
             <nav className={styles.desktopNav}>
               {navItems.map((item) => {
+                const hasChildren = !!item.children?.length;
+                const childActive = hasChildren && item.children!.some(
+                  (c) => pathname === c.href || pathname.startsWith(c.href + "/"),
+                );
                 const isActive =
-                  pathname === item.href ||
-                  pathname.startsWith(item.href + "/");
+                  !hasChildren &&
+                  (pathname === item.href ||
+                    pathname.startsWith(item.href + "/"));
+
+                if (hasChildren) {
+                  return (
+                    <div key={item.label} className={styles.dropdown}>
+                      <button
+                        className={styles.navLink}
+                        data-active={childActive}
+                      >
+                        {item.label}
+                        <ChevronDown size={12} />
+                      </button>
+                      <div className={styles.dropdownMenu}>
+                        {item.children!.map((child) => {
+                          const isChildActive =
+                            pathname === child.href ||
+                            pathname.startsWith(child.href + "/");
+                          return (
+                            <Link
+                              key={child.href}
+                              href={child.href}
+                              className={styles.dropdownItem}
+                              data-active={isChildActive}
+                            >
+                              {child.icon}
+                              <span>{child.label}</span>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                }
+
                 return (
                   <Link
                     key={item.href}
@@ -120,9 +188,54 @@ export function NavTopBar({ children, settings = {}, logoUrl }: NavTopBarProps) 
           data-open={mobileOpen}
         >
           {navItems.map((item) => {
+            const hasChildren = !!item.children?.length;
             const isActive =
-              pathname === item.href ||
-              pathname.startsWith(item.href + "/");
+              !hasChildren &&
+              (pathname === item.href ||
+                pathname.startsWith(item.href + "/"));
+
+            if (hasChildren) {
+              const isGroupOpen = openGroups.has(item.label);
+              return (
+                <div key={item.label}>
+                  <button
+                    className={styles.mobileLink}
+                    onClick={() => toggleGroup(item.label)}
+                  >
+                    {item.icon}
+                    <span>{item.label}</span>
+                    <ChevronDown
+                      size={14}
+                      style={{
+                        marginLeft: "auto",
+                        transform: isGroupOpen ? "rotate(180deg)" : "none",
+                        transition: "transform 0.15s",
+                      }}
+                    />
+                  </button>
+                  {isGroupOpen &&
+                    item.children!.map((child) => {
+                      const isChildActive =
+                        pathname === child.href ||
+                        pathname.startsWith(child.href + "/");
+                      return (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          className={styles.mobileLink}
+                          data-active={isChildActive}
+                          data-nested="true"
+                          onClick={() => setMobileOpen(false)}
+                        >
+                          {child.icon}
+                          <span>{child.label}</span>
+                        </Link>
+                      );
+                    })}
+                </div>
+              );
+            }
+
             return (
               <Link
                 key={item.href}

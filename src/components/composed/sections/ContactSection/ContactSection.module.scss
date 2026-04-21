@@ -1,0 +1,15 @@
+/* ============================================================================
+   ContactSection — page builder section wrapping ContactForm
+   ============================================================================ */
+
+.section {
+  width: 100%;
+  max-width: var(--content-width, 48rem);
+  margin-inline: auto;
+  padding: var(--space-8) var(--space-4);
+}
+
+.inner {
+  max-width: 36rem;
+  margin-inline: auto;
+}

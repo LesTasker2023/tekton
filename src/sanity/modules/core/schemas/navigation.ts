@@ -35,8 +35,8 @@ export const navigationType = defineType({
               name: "href",
               title: "URL",
               type: "string",
-              validation: (r) => r.required(),
-              description: "Internal path (e.g. /news) or external URL.",
+              description:
+                "Internal path (e.g. /news) or external URL. Leave empty for category-only groups.",
             }),
             defineField({
               name: "icon",
@@ -45,9 +45,66 @@ export const navigationType = defineType({
               description: "Lucide icon name.",
               components: { input: IconPickerInput },
             }),
+            defineField({
+              name: "children",
+              title: "Child Links",
+              type: "array",
+              description:
+                "Nested links shown under this item. Makes this item a collapsible group.",
+              of: [
+                {
+                  type: "object",
+                  name: "navChildLink",
+                  title: "Child Link",
+                  fields: [
+                    defineField({
+                      name: "label",
+                      title: "Label",
+                      type: "string",
+                      validation: (r) => r.required(),
+                    }),
+                    defineField({
+                      name: "href",
+                      title: "URL",
+                      type: "string",
+                      validation: (r) => r.required(),
+                      description: "Internal path or external URL.",
+                    }),
+                    defineField({
+                      name: "icon",
+                      title: "Icon",
+                      type: "string",
+                      description: "Lucide icon name.",
+                      components: { input: IconPickerInput },
+                    }),
+                  ],
+                  preview: {
+                    select: { title: "label", subtitle: "href", icon: "icon" },
+                  },
+                  components: {
+                    preview: NavLinkPreview as never,
+                  },
+                },
+              ],
+            }),
           ],
           preview: {
-            select: { title: "label", subtitle: "href", icon: "icon" },
+            select: {
+              title: "label",
+              subtitle: "href",
+              icon: "icon",
+              children: "children",
+            },
+            prepare({ title, subtitle, icon, children }) {
+              const count = children?.length;
+              return {
+                title: title ?? "",
+                subtitle: count
+                  ? `${count} child link${count > 1 ? "s" : ""}`
+                  : subtitle ?? "",
+                icon,
+              };
+            },
           },
           components: {
             preview: NavLinkPreview as never,

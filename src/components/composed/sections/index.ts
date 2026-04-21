@@ -6,3 +6,7 @@ export { ImageGallerySection } from "./ImageGallerySection";
 export { PageHero } from "./PageHero";
 export { RichTextSection } from "./RichTextSection";
 export { StatsRowSection } from "./StatsRowSection";
+export { ContactSection } from "./ContactSection";
+export { TestimonialSection } from "./TestimonialSection";
+export { PricingSection } from "./PricingSection";
+export { LogoCloudSection } from "./LogoCloudSection";

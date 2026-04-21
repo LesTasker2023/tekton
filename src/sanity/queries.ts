@@ -300,7 +300,7 @@ export const SITE_SETTINGS_QUERY = groq`
 /* ─── Navigation ─── */
 export const NAVIGATION_QUERY = groq`
   *[_type == "navigation"][0] {
-    mainNav[] { label, href, icon },
+    mainNav[] { label, href, icon, children[] { label, href, icon } },
     footerNav[] { label, href },
     footerText
   }

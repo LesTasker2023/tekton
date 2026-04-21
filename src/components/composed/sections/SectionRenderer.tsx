@@ -10,6 +10,7 @@ import { ImageGallerySection } from "./ImageGallerySection";
 import { TestimonialSection } from "./TestimonialSection";
 import { PricingSection } from "./PricingSection";
 import { LogoCloudSection } from "./LogoCloudSection";
+import { ContactSection } from "./ContactSection";
 
 /**
  * Registry: maps Sanity section `_type` → React component.
@@ -27,6 +28,7 @@ const SECTION_MAP: Record<string, React.ComponentType<any>> = {
   testimonialSection: TestimonialSection,
   pricingSection: PricingSection,
   logoCloudSection: LogoCloudSection,
+  contactSection: ContactSection,
 };
 
 interface Section {

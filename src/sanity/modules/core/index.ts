@@ -30,6 +30,10 @@ import {
   ctaSectionType,
   richTextSectionType,
   imageGallerySectionType,
+  contactSectionType,
+  testimonialSectionType,
+  pricingSectionType,
+  logoCloudSectionType,
 } from "@/sanity/objects/sections";
 
 export const coreSchemas: SchemaTypeDefinition[] = [
@@ -58,4 +62,8 @@ export const coreSchemas: SchemaTypeDefinition[] = [
   ctaSectionType,
   richTextSectionType,
   imageGallerySectionType,
+  contactSectionType,
+  testimonialSectionType,
+  pricingSectionType,
+  logoCloudSectionType,
 ];

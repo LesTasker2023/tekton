@@ -1,0 +1,91 @@
+/* ============================================================================
+   ContactForm — simple inquiry form
+   ============================================================================ */
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.contact__title {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+
+/* ─── Form layout ─── */
+
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.contact__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.contact__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.contact__textarea {
+  width: 100%;
+  padding: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.contact__textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.contact__fieldError {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-danger, #ef4444);
+}
+
+.contact__error {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-danger, #ef4444);
+  margin: 0;
+}
+
+/* ─── Success state ─── */
+
+.contact__success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-4);
+  text-align: center;
+  color: var(--color-primary);
+}
+
+.contact__success p {
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  margin: 0;
+}
