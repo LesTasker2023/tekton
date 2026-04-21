@@ -88,6 +88,8 @@ export function PricingSection({
   subheading,
   tiers,
 }: PricingSectionProps) {
+  if (!tiers?.length) return null;
+
   return (
     <motion.section
       className={styles.section}

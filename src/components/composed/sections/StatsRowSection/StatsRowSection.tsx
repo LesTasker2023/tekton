@@ -25,6 +25,8 @@ export function StatsRowSection({
   stats,
   accent = false,
 }: StatsRowSectionProps) {
+  if (!stats?.length) return null;
+
   return (
     <motion.section
       className={styles.section}

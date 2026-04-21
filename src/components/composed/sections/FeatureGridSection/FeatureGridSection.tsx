@@ -29,6 +29,7 @@ export function FeatureGridSection({
   features,
   columns = 0,
 }: FeatureGridSectionProps) {
+  if (!features?.length) return null;
   const gridStyle =
     columns > 0
       ? { gridTemplateColumns: `repeat(${columns}, 1fr)` }

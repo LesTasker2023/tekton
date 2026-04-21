@@ -77,6 +77,8 @@ export function TestimonialSection({
   layout = "grid",
   columns = 3,
 }: TestimonialSectionProps) {
+  if (!testimonials?.length) return null;
+
   const sectionClass = [
     styles.section,
     layout === "stacked" && styles["section--stacked"],

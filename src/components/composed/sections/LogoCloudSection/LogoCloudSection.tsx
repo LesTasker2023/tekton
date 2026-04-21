@@ -28,6 +28,8 @@ export function LogoCloudSection({
   columns = 5,
   grayscale = true,
 }: LogoCloudSectionProps) {
+  if (!logos?.length) return null;
+
   const sectionClass = [styles.section, grayscale && styles["section--grayscale"]]
     .filter(Boolean)
     .join(" ");
