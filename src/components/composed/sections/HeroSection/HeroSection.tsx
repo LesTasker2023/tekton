@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { urlFor } from "@/sanity/image";
+import { urlFor, hotspotPosition } from "@/sanity/image";
 import { fadeIn } from "@/lib/motion";
 import { Button } from "@/components/ui";
 import styles from "./HeroSection.module.scss";
@@ -10,7 +10,7 @@ import styles from "./HeroSection.module.scss";
 interface HeroSectionProps {
   heading: string;
   subheading?: string;
-  backgroundImage?: { asset: { _ref: string } };
+  backgroundImage?: { asset: { _ref: string }; hotspot?: { x: number; y: number } };
   backgroundVideoUrl?: string;
   cta?: { label?: string; href?: string };
   align?: "left" | "center";
@@ -53,6 +53,7 @@ export function HeroSection({
           fill
           priority
           className={styles.bgImage}
+          style={{ objectPosition: hotspotPosition(backgroundImage.hotspot) }}
         />
       ) : null}
       <div className={styles.overlay} />

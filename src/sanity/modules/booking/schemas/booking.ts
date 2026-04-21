@@ -15,13 +15,6 @@ export const bookingType = defineType({
       validation: (r) => r.required(),
     }),
     defineField({
-      name: "slot",
-      title: "Availability Slot",
-      type: "reference",
-      to: [{ type: "availabilitySlot" }],
-      description: "Optional — omitted for general enquiry bookings.",
-    }),
-    defineField({
       name: "customerName",
       title: "Customer Name",
       type: "string",
@@ -42,15 +35,12 @@ export const bookingType = defineType({
       name: "date",
       title: "Date",
       type: "date",
-      description: "Denormalized from slot for easy querying.",
-      readOnly: true,
     }),
     defineField({
       name: "timeSlot",
       title: "Time Slot",
       type: "string",
       description: 'e.g. "09:00 – 10:00"',
-      readOnly: true,
     }),
     defineField({
       name: "message",

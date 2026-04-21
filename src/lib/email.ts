@@ -47,7 +47,7 @@ export async function sendBookingNotification({
     : `New booking: ${itemTitle} — ${date} ${timeSlot}`;
 
   await resend.emails.send({
-    from: `${fromName} <onboarding@resend.dev>`,
+    from: `${fromName} <${process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev"}>`,
     to,
     subject,
     text: lines,

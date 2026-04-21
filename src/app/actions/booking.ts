@@ -3,7 +3,6 @@
 import { z } from "zod";
 import { writeClient } from "@/sanity/writeClient";
 import { sendBookingNotification } from "@/lib/email";
-import { BOOKING_SETTINGS_QUERY } from "@/sanity/queries";
 
 const bookingSchema = z.object({
   itemId: z.string().min(1),
