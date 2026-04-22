@@ -107,13 +107,52 @@ const structure: StructureResolver = (S) =>
                     .title("Item Categories")
                     .defaultOrdering([{ field: "sortOrder", direction: "asc" }]),
                 ),
-S.listItem()
-                .title("Bookings")
-                .id("bookings")
+            ]),
+        ),
+
+      // Bookings (module) — top-level for easy access
+      S.listItem()
+        .title("Bookings")
+        .id("bookings")
+        .icon(CalendarCheck)
+        .child(
+          S.list()
+            .title("Bookings")
+            .items([
+              S.listItem()
+                .title("All Bookings")
+                .id("bookings-all")
                 .icon(CalendarCheck)
                 .child(
                   S.documentTypeList("booking")
-                    .title("Bookings")
+                    .title("All Bookings")
+                    .defaultOrdering([{ field: "createdAt", direction: "desc" }]),
+                ),
+              S.listItem()
+                .title("Pending")
+                .id("bookings-pending")
+                .child(
+                  S.documentTypeList("booking")
+                    .title("Pending")
+                    .filter('_type == "booking" && status == "pending"')
+                    .defaultOrdering([{ field: "date", direction: "asc" }]),
+                ),
+              S.listItem()
+                .title("Confirmed")
+                .id("bookings-confirmed")
+                .child(
+                  S.documentTypeList("booking")
+                    .title("Confirmed")
+                    .filter('_type == "booking" && status == "confirmed"')
+                    .defaultOrdering([{ field: "date", direction: "asc" }]),
+                ),
+              S.listItem()
+                .title("Cancelled")
+                .id("bookings-cancelled")
+                .child(
+                  S.documentTypeList("booking")
+                    .title("Cancelled")
+                    .filter('_type == "booking" && status == "cancelled"')
                     .defaultOrdering([{ field: "createdAt", direction: "desc" }]),
                 ),
             ]),
