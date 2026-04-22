@@ -1,7 +1,5 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 interface BookingEmailParams {
   to: string;
   fromName: string;
@@ -25,6 +23,7 @@ export async function sendBookingNotification({
   timeSlot,
   message,
 }: BookingEmailParams) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
   const isEnquiry = !date && !timeSlot;
 
   const lines = [
